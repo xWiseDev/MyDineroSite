@@ -8,25 +8,25 @@ const featuredTestimonials = testimonials.filter(t => t.featured);
 <section class="section testimonials">
   <div class="container">
     <header class="section-header scroll-animate">
-      <span class="section-eyebrow">Real Reviews</span>
+      <span class="section-eyebrow">What People Say</span>
       <h2 class="section-title">
-        Loved by Budget Planners<br />
-        <span class="title-muted">Worldwide</span>
+        A Different Relationship<br />
+        <span class="title-muted">With Money</span>
       </h2>
       <p class="section-subtitle">
-        Real reviews from real users who finally found the spending tracker they've been waiting for.
+        Real stories from people who stopped avoiding their finances and started understanding them.
       </p>
     </header>
   </div>
 
-  <div class="testimonials-carousel">
-    <div class="carousel-track">
+  <div class="testimonials-carousel" id="testimonials-carousel">
+    <div class="carousel-track" id="carousel-track">
       {featuredTestimonials.map((testimonial) => (
         <TestimonialCard {...testimonial} />
       ))}
       <!-- Duplicate for infinite scroll effect -->
       {featuredTestimonials.map((testimonial) => (
-        <TestimonialCard {...testimonial} class="testimonial-duplicate" />
+        <TestimonialCard {...testimonial} />
       ))}
     </div>
   </div>
@@ -89,16 +89,13 @@ const featuredTestimonials = testimonials.filter(t => t.featured);
   .testimonials-carousel {
     position: relative;
     width: 100%;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    scroll-snap-type: x mandatory;
+    overflow: hidden;
     padding-block: var(--space-4);
+    cursor: grab;
   }
 
-  .testimonials-carousel::-webkit-scrollbar {
-    display: none;
+  .testimonials-carousel:active {
+    cursor: grabbing;
   }
 
   /* Fade edges */
@@ -108,7 +105,7 @@ const featuredTestimonials = testimonials.filter(t => t.featured);
     position: absolute;
     top: 0;
     bottom: 0;
-    width: 80px;
+    width: 100px;
     pointer-events: none;
     z-index: 2;
   }
@@ -125,36 +122,14 @@ const featuredTestimonials = testimonials.filter(t => t.featured);
 
   .carousel-track {
     display: flex;
-    gap: var(--space-6);
-    padding-inline: var(--container-padding);
+    gap: var(--space-5);
+    padding-inline: var(--space-6);
     width: max-content;
+    animation: scroll-testimonials 40s linear infinite;
   }
 
-  .carousel-track > :global(.testimonial-card) {
-    scroll-snap-align: center;
-  }
-
-  /* Hide duplicates on mobile where auto-scroll doesn't work as well */
-  @media (max-width: 768px) {
-    .carousel-track > :global(.testimonial-duplicate) {
-      display: none;
-    }
-
-    .testimonials-carousel::before,
-    .testimonials-carousel::after {
-      width: 40px;
-    }
-  }
-
-  /* Auto-scroll animation for desktop */
-  @media (min-width: 769px) and (prefers-reduced-motion: no-preference) {
-    .carousel-track {
-      animation: scroll-testimonials 35s linear infinite;
-    }
-
-    .testimonials-carousel:hover .carousel-track {
-      animation-play-state: paused;
-    }
+  .carousel-track.paused {
+    animation-play-state: paused;
   }
 
   @keyframes scroll-testimonials {
@@ -166,9 +141,75 @@ const featuredTestimonials = testimonials.filter(t => t.featured);
     }
   }
 
+  /* Mobile adjustments */
+  @media (max-width: 768px) {
+    .testimonials-carousel::before,
+    .testimonials-carousel::after {
+      width: 60px;
+    }
+
+    .carousel-track {
+      gap: var(--space-4);
+      padding-inline: var(--space-4);
+      animation-duration: 35s;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .testimonials-carousel::before,
+    .testimonials-carousel::after {
+      width: 40px;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .carousel-track {
       animation: none;
     }
+
+    .testimonials-carousel {
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .carousel-track > :global(.testimonial-card) {
+      scroll-snap-align: center;
+    }
   }
 </style>
+
+<script>
+  const carousel = document.getElementById('testimonials-carousel');
+  const track = document.getElementById('carousel-track');
+
+  if (carousel && track) {
+    let isPaused = false;
+
+    const pause = () => {
+      if (!isPaused) {
+        track.classList.add('paused');
+        isPaused = true;
+      }
+    };
+
+    const resume = () => {
+      if (isPaused) {
+        track.classList.remove('paused');
+        isPaused = false;
+      }
+    };
+
+    // Desktop: hover to pause
+    carousel.addEventListener('mouseenter', pause);
+    carousel.addEventListener('mouseleave', resume);
+
+    // Mobile: touch to pause, release to resume
+    carousel.addEventListener('touchstart', pause, { passive: true });
+    carousel.addEventListener('touchend', resume, { passive: true });
+
+    // Also handle click for desktop testing
+    carousel.addEventListener('mousedown', pause);
+    carousel.addEventListener('mouseup', resume);
+  }
+</script>

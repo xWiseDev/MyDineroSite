@@ -44,9 +44,10 @@ const {
     />
   </head>
   <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     {!hideHeader && <Header />}
 
-    <main>
+    <main id="main-content">
       <slot />
     </main>
 

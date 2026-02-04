@@ -17,6 +17,7 @@ const {
   rel="noopener noreferrer"
   aria-label="Download on the App Store"
 >
+  <span class="badge-glow" aria-hidden="true"></span>
   <img
     src={`${import.meta.env.BASE_URL}images/app-store-download-badge.svg`}
     alt="Download on the App Store"
@@ -26,28 +27,69 @@ const {
 
 <style>
   .app-store-badge {
+    position: relative;
     display: inline-block;
-    transition: transform var(--transition-fast), opacity var(--transition-fast);
+    border-radius: 10px;
+    transition:
+      transform var(--transition-fast),
+      box-shadow var(--transition-fast);
+  }
+
+  .badge-glow {
+    position: absolute;
+    inset: -4px;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(255, 255, 255, 0.15) 0%,
+      transparent 70%
+    );
+    border-radius: 14px;
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+    pointer-events: none;
   }
 
   .app-store-badge:hover {
-    transform: scale(1.02);
-    opacity: 0.9;
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  }
+
+  .app-store-badge:hover .badge-glow {
+    opacity: 1;
   }
 
   .app-store-badge:active {
-    transform: scale(0.98);
+    transform: translateY(0) scale(0.98);
+  }
+
+  .app-store-badge:focus-visible {
+    outline: 2px solid var(--color-white);
+    outline-offset: 4px;
+    border-radius: 10px;
   }
 
   .badge-img {
+    position: relative;
     width: 150px;
     height: auto;
     display: block;
+    border-radius: 10px;
   }
 
   @media (max-width: 480px) {
     .badge-img {
       width: 135px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .app-store-badge,
+    .badge-glow {
+      transition: none;
+    }
+
+    .app-store-badge:hover {
+      transform: none;
     }
   }
 </style>

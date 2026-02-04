@@ -176,9 +176,10 @@ const getImageSrc = (path: string | undefined) => {
     max-width: none;
     object-fit: contain;
     object-position: top center;
-    /* Crisp image rendering */
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: crisp-edges;
+    /* High-quality image rendering */
+    image-rendering: auto;
+    transform: translateZ(0);
+    backface-visibility: hidden;
     transition: transform var(--transition-slow);
   }
 

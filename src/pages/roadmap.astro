@@ -1,0 +1,835 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Icon from '@/components/ui/Icon.astro';
+import { timelinePhases, statusConfig } from '@/data/roadmap';
+import type { RoadmapStatus } from '@/data/roadmap';
+
+const getStatusClass = (status: RoadmapStatus) => `status-${status}`;
+---
+
+<BaseLayout
+  title="Roadmap"
+  description="See what's shipped, what's coming next, and what we're exploring for MyDinero expense tracker."
+>
+  <section class="roadmap-hero">
+    <!-- Ambient Background Effects (matching main page) -->
+    <div class="hero-bg">
+      <div class="hero-orb hero-orb-1"></div>
+      <div class="hero-orb hero-orb-2"></div>
+      <div class="hero-orb hero-orb-3"></div>
+      <div class="hero-grid"></div>
+    </div>
+
+    <div class="container">
+      <header class="page-header scroll-animate">
+        <div class="page-badge">
+          <Icon name="rocket" size={16} />
+          <span>Product Roadmap</span>
+        </div>
+        <h1 class="page-title">
+          Building the Future of<br />
+          <span class="title-highlight">Expense Tracking</span>
+        </h1>
+        <p class="page-subtitle">
+          Follow our journey from vision to reality. See what we've shipped,
+          what's coming next, and where we're headed.
+        </p>
+      </header>
+
+      <!-- Status Legend -->
+      <div class="status-legend scroll-animate">
+        {Object.entries(statusConfig).map(([key, config]) => (
+          <div class={`legend-item ${getStatusClass(key as RoadmapStatus)}`}>
+            <span class="legend-dot"></span>
+            <span class="legend-label">{config.label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline Section -->
+  <section class="timeline-section">
+    <div class="container">
+      <div class="timeline">
+        <div class="timeline-line" aria-hidden="true"></div>
+
+        {timelinePhases.map((phase, phaseIndex) => (
+          <article class={`timeline-phase ${getStatusClass(phase.status)} scroll-animate`}>
+            <!-- Timeline Node -->
+            <div class="timeline-node" aria-hidden="true">
+              <div class="node-ring">
+                <div class="node-center">
+                  <Icon name={phase.icon} size={18} />
+                </div>
+              </div>
+              <span class="node-date">{phase.date}</span>
+            </div>
+
+            <!-- Phase Card -->
+            <div class="phase-card">
+              <div class="card-glass"></div>
+              <div class="card-content">
+                <header class="phase-header">
+                  <div class="phase-meta">
+                    <span class="phase-eyebrow">{phase.subtitle}</span>
+                    <h2 class="phase-title">{phase.title}</h2>
+                  </div>
+                  <span class={`phase-badge ${getStatusClass(phase.status)}`}>
+                    {statusConfig[phase.status].label}
+                  </span>
+                </header>
+
+                <div class="phase-items">
+                  {phase.items.map((item, itemIndex) => (
+                    <div class={`phase-item ${getStatusClass(item.status)}`}>
+                      <div class="item-icon">
+                        <Icon name={item.icon} size={18} />
+                      </div>
+                      <div class="item-content">
+                        <h3 class="item-title">{item.title}</h3>
+                        <p class="item-description">{item.description}</p>
+                      </div>
+                      <div class={`item-indicator ${getStatusClass(item.status)}`}></div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <!-- CTA Section -->
+      <div class="cta-card scroll-animate">
+        <div class="card-glass"></div>
+        <div class="cta-content">
+          <div class="cta-icon">
+            <Icon name="sparkles" size={28} />
+          </div>
+          <h2 class="cta-title">Have a Feature Request?</h2>
+          <p class="cta-description">
+            Your ideas shape our roadmap. Tell us what would make MyDinero perfect for you.
+          </p>
+          <a href={`${import.meta.env.BASE_URL}contact`} class="cta-button">
+            <span>Share Your Ideas</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Hero Section */
+  .roadmap-hero {
+    position: relative;
+    padding-top: calc(72px + var(--space-16));
+    padding-bottom: var(--space-12);
+    overflow: hidden;
+  }
+
+  /* Ambient Background (matching main page Hero) */
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .hero-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.4;
+    animation: float-slow 20s ease-in-out infinite;
+  }
+
+  .hero-orb-1 {
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.08), transparent 70%);
+    top: -20%;
+    right: -10%;
+    animation-delay: 0s;
+  }
+
+  .hero-orb-2 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.05), transparent 70%);
+    bottom: -10%;
+    left: -5%;
+    animation-delay: -7s;
+  }
+
+  .hero-orb-3 {
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.04), transparent 70%);
+    top: 30%;
+    left: 40%;
+    animation-delay: -14s;
+  }
+
+  @keyframes float-slow {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    33% {
+      transform: translate(30px, -30px) scale(1.05);
+    }
+    66% {
+      transform: translate(-20px, 20px) scale(0.95);
+    }
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+  }
+
+  /* Page Header */
+  .page-header {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    margin-bottom: var(--space-10);
+  }
+
+  .page-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(255, 255, 255, 0.03) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-full);
+    margin-bottom: var(--space-6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--color-white-70);
+    animation: fade-in-down 0.8s ease forwards;
+  }
+
+  .page-title {
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: var(--space-5);
+    animation: fade-in-down 0.8s ease 0.1s forwards;
+    opacity: 0;
+  }
+
+  .title-highlight {
+    position: relative;
+    display: inline-block;
+  }
+
+  .title-highlight::after {
+    content: '';
+    position: absolute;
+    bottom: 0.1em;
+    left: 0;
+    right: 0;
+    height: 0.12em;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1));
+    border-radius: var(--radius-full);
+    transform: scaleX(0);
+    transform-origin: left;
+    animation: underline-grow 0.8s ease 0.8s forwards;
+  }
+
+  @keyframes underline-grow {
+    to { transform: scaleX(1); }
+  }
+
+  @keyframes fade-in-down {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .page-subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--color-white-60);
+    line-height: 1.7;
+    max-width: 520px;
+    margin-inline: auto;
+    animation: fade-in-up 0.8s ease 0.2s forwards;
+    opacity: 0;
+  }
+
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Status Legend */
+  .status-legend {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    position: relative;
+    z-index: 1;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: var(--radius-full);
+    transition: all var(--transition-fast);
+  }
+
+  .legend-item:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+  }
+
+  .legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    transition: transform var(--transition-fast);
+  }
+
+  .legend-item:hover .legend-dot {
+    transform: scale(1.2);
+  }
+
+  .legend-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-white-60);
+    font-weight: 500;
+  }
+
+  /* Status Colors */
+  .status-shipped .legend-dot { background-color: #34C759; }
+  .status-inProgress .legend-dot { background-color: #FF9500; animation: pulse-dot 2s ease-in-out infinite; }
+  .status-planned .legend-dot { background-color: #007AFF; }
+  .status-exploring .legend-dot { background-color: #AF52DE; }
+
+  @keyframes pulse-dot {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.4); opacity: 0.7; }
+  }
+
+  /* Timeline Section */
+  .timeline-section {
+    padding-bottom: var(--space-16);
+  }
+
+  .timeline {
+    position: relative;
+    max-width: 800px;
+    margin-inline: auto;
+    padding-left: 80px;
+  }
+
+  .timeline-line {
+    position: absolute;
+    left: 19px;
+    top: 0;
+    bottom: 60px;
+    width: 2px;
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.2) 0%,
+      rgba(255, 255, 255, 0.1) 50%,
+      rgba(255, 255, 255, 0.05) 100%
+    );
+    border-radius: 1px;
+  }
+
+  /* Timeline Phase */
+  .timeline-phase {
+    position: relative;
+    margin-bottom: var(--space-10);
+  }
+
+  .timeline-phase:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Timeline Node */
+  .timeline-node {
+    position: absolute;
+    left: -80px;
+    top: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40px;
+  }
+
+  .node-ring {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-black);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    transition: all var(--transition-base);
+  }
+
+  .timeline-phase:hover .node-ring {
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+  }
+
+  .status-shipped .node-ring { border-color: #34C759; }
+  .status-shipped:hover .node-ring { box-shadow: 0 0 20px rgba(52, 199, 89, 0.3); }
+  .status-inProgress .node-ring { border-color: #FF9500; }
+  .status-inProgress:hover .node-ring { box-shadow: 0 0 20px rgba(255, 149, 0, 0.3); }
+  .status-planned .node-ring { border-color: #007AFF; }
+  .status-planned:hover .node-ring { box-shadow: 0 0 20px rgba(0, 122, 255, 0.3); }
+  .status-exploring .node-ring { border-color: #AF52DE; }
+  .status-exploring:hover .node-ring { box-shadow: 0 0 20px rgba(175, 82, 222, 0.3); }
+
+  .node-center {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    color: var(--color-white);
+    transition: all var(--transition-base);
+  }
+
+  .status-shipped .node-center { background: linear-gradient(135deg, #34C759, #28A745); }
+  .status-inProgress .node-center { background: linear-gradient(135deg, #FF9500, #E68600); }
+  .status-planned .node-center { background: linear-gradient(135deg, #007AFF, #0056CC); }
+  .status-exploring .node-center { background: linear-gradient(135deg, #AF52DE, #8E3DC0); }
+
+  .node-date {
+    margin-top: var(--space-2);
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--color-white-40);
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  /* Phase Card */
+  .phase-card {
+    position: relative;
+    border-radius: var(--radius-2xl);
+    overflow: hidden;
+    transition: transform var(--transition-base);
+  }
+
+  .timeline-phase:hover .phase-card {
+    transform: translateX(4px);
+  }
+
+  .card-glass {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.06) 0%,
+      rgba(255, 255, 255, 0.02) 50%,
+      rgba(255, 255, 255, 0.04) 100%
+    );
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-2xl);
+    transition: all var(--transition-base);
+  }
+
+  .timeline-phase:hover .card-glass {
+    background: linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(255, 255, 255, 0.03) 50%,
+      rgba(255, 255, 255, 0.06) 100%
+    );
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+
+  .card-content {
+    position: relative;
+    z-index: 1;
+    padding: var(--space-6);
+  }
+
+  /* Phase Header */
+  .phase-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-bottom: var(--space-5);
+  }
+
+  .phase-eyebrow {
+    display: block;
+    font-size: var(--font-size-xs);
+    font-weight: 500;
+    color: var(--color-white-40);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--space-1);
+  }
+
+  .phase-title {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    color: var(--color-white);
+    line-height: 1.2;
+  }
+
+  .phase-badge {
+    flex-shrink: 0;
+    font-size: 11px;
+    font-weight: 600;
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-full);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .phase-badge.status-shipped { background: rgba(52, 199, 89, 0.15); color: #34C759; }
+  .phase-badge.status-inProgress { background: rgba(255, 149, 0, 0.15); color: #FF9500; }
+  .phase-badge.status-planned { background: rgba(0, 122, 255, 0.15); color: #007AFF; }
+  .phase-badge.status-exploring { background: rgba(175, 82, 222, 0.15); color: #AF52DE; }
+
+  /* Phase Items */
+  .phase-items {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .phase-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-fast);
+  }
+
+  .phase-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.08);
+    transform: translateX(4px);
+  }
+
+  .item-icon {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-md);
+    color: var(--color-white-60);
+    transition: all var(--transition-fast);
+  }
+
+  .phase-item:hover .item-icon {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--color-white);
+    transform: scale(1.05);
+  }
+
+  .item-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .item-title {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-white);
+    margin-bottom: 2px;
+  }
+
+  .item-description {
+    font-size: var(--font-size-xs);
+    color: var(--color-white-50);
+    line-height: 1.4;
+  }
+
+  .item-indicator {
+    flex-shrink: 0;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    opacity: 0.8;
+  }
+
+  .item-indicator.status-shipped { background: #34C759; }
+  .item-indicator.status-inProgress { background: #FF9500; animation: pulse-dot 2s ease-in-out infinite; }
+  .item-indicator.status-planned { background: #007AFF; }
+  .item-indicator.status-exploring { background: #AF52DE; }
+
+  /* CTA Card */
+  .cta-card {
+    position: relative;
+    max-width: 800px;
+    margin: var(--space-16) auto 0;
+    border-radius: var(--radius-2xl);
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .cta-card .card-glass {
+    background: linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.06) 0%,
+      rgba(255, 255, 255, 0.02) 50%,
+      rgba(255, 255, 255, 0.04) 100%
+    );
+  }
+
+  .cta-content {
+    position: relative;
+    z-index: 1;
+    padding: var(--space-10);
+  }
+
+  .cta-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-xl);
+    color: var(--color-white);
+    margin-bottom: var(--space-5);
+    transition: all var(--transition-base);
+  }
+
+  .cta-card:hover .cta-icon {
+    transform: scale(1.05);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.08));
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  .cta-title {
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+    margin-bottom: var(--space-3);
+  }
+
+  .cta-description {
+    color: var(--color-white-60);
+    margin-bottom: var(--space-6);
+    max-width: 400px;
+    margin-inline: auto;
+  }
+
+  .cta-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    height: 52px;
+    padding-inline: var(--space-8);
+    background: var(--color-white);
+    color: var(--color-black);
+    font-weight: 600;
+    font-size: var(--font-size-base);
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-fast);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+  }
+
+  .cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+  }
+
+  .cta-button:active {
+    transform: translateY(0);
+  }
+
+  .cta-button svg {
+    transition: transform var(--transition-fast);
+  }
+
+  .cta-button:hover svg {
+    transform: translateX(4px);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .roadmap-hero {
+      padding-top: calc(72px + var(--space-12));
+    }
+
+    .timeline {
+      padding-left: 60px;
+    }
+
+    .timeline-line {
+      left: 15px;
+    }
+
+    .timeline-node {
+      left: -60px;
+      width: 32px;
+      top: 20px;
+    }
+
+    .node-ring {
+      width: 32px;
+      height: 32px;
+    }
+
+    .node-center {
+      width: 26px;
+      height: 26px;
+    }
+
+    .node-center :global(svg) {
+      width: 14px;
+      height: 14px;
+    }
+
+    .node-date {
+      font-size: 9px;
+    }
+
+    .card-content {
+      padding: var(--space-5);
+    }
+
+    .phase-header {
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .phase-item {
+      flex-wrap: wrap;
+      position: relative;
+    }
+
+    .item-description {
+      flex-basis: 100%;
+      padding-left: calc(36px + var(--space-3));
+      margin-top: var(--space-1);
+    }
+
+    .item-indicator {
+      position: absolute;
+      top: var(--space-3);
+      right: var(--space-4);
+    }
+
+    .status-legend {
+      gap: var(--space-3);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .timeline {
+      padding-left: 0;
+    }
+
+    .timeline-line,
+    .timeline-node {
+      display: none;
+    }
+
+    .timeline-phase {
+      margin-bottom: var(--space-6);
+    }
+
+    .card-content {
+      padding: var(--space-4);
+    }
+
+    .cta-content {
+      padding: var(--space-6);
+    }
+
+    .legend-item {
+      padding: var(--space-1) var(--space-3);
+      font-size: var(--font-size-xs);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-orb,
+    .page-badge,
+    .page-title,
+    .page-subtitle,
+    .legend-dot,
+    .legend-item,
+    .node-ring,
+    .node-center,
+    .phase-card,
+    .card-glass,
+    .phase-item,
+    .item-icon,
+    .cta-icon,
+    .cta-button,
+    .cta-button svg {
+      animation: none;
+      transition: none;
+    }
+
+    .title-highlight::after {
+      animation: none;
+      transform: scaleX(1);
+    }
+
+    .timeline-phase:hover .phase-card,
+    .phase-item:hover,
+    .legend-item:hover,
+    .cta-button:hover {
+      transform: none;
+    }
+
+    .page-title,
+    .page-subtitle {
+      opacity: 1;
+    }
+  }
+</style>

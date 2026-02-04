@@ -31,11 +31,15 @@ const resolvedHref = href?.startsWith('/') ? `${import.meta.env.BASE_URL}${href.
   target={isExternal ? '_blank' : undefined}
   rel={isExternal ? 'noopener noreferrer' : undefined}
 >
-  <slot />
+  <span class="btn-content">
+    <slot />
+  </span>
+  <span class="btn-glow" aria-hidden="true"></span>
 </Tag>
 
 <style>
   .btn {
+    position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -46,14 +50,30 @@ const resolvedHref = href?.startsWith('/') ? `${import.meta.env.BASE_URL}${href.
     border: none;
     border-radius: var(--radius-lg);
     cursor: pointer;
+    overflow: hidden;
     transition:
-      background-color var(--transition-fast),
       transform var(--transition-fast),
       box-shadow var(--transition-fast);
   }
 
+  .btn-content {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .btn-glow {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+    pointer-events: none;
+  }
+
   .btn:focus-visible {
-    outline: 2px solid var(--color-green-500);
+    outline: 2px solid var(--color-white);
     outline-offset: 2px;
   }
 
@@ -76,44 +96,101 @@ const resolvedHref = href?.startsWith('/') ? `${import.meta.env.BASE_URL}${href.
     font-size: var(--font-size-lg);
   }
 
-  /* Variants */
+  /* Primary Variant */
   .btn-primary {
-    background: var(--gradient-green);
+    background: var(--color-white);
     color: var(--color-black);
-    box-shadow: 0 0 20px rgba(52, 199, 89, 0.3);
+    box-shadow:
+      0 0 0 0 rgba(255, 255, 255, 0),
+      0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .btn-primary .btn-glow {
+    background: radial-gradient(
+      circle at center,
+      rgba(255, 255, 255, 0.3) 0%,
+      transparent 70%
+    );
   }
 
   .btn-primary:hover {
-    transform: scale(1.02);
-    box-shadow: 0 0 30px rgba(52, 199, 89, 0.5);
+    transform: translateY(-2px);
+    box-shadow:
+      0 0 30px rgba(255, 255, 255, 0.25),
+      0 8px 24px rgba(0, 0, 0, 0.2);
+  }
+
+  .btn-primary:hover .btn-glow {
+    opacity: 1;
   }
 
   .btn-primary:active {
-    transform: scale(0.98);
+    transform: translateY(0);
+    box-shadow:
+      0 0 15px rgba(255, 255, 255, 0.15),
+      0 2px 8px rgba(0, 0, 0, 0.15);
   }
 
+  /* Secondary Variant */
   .btn-secondary {
-    background-color: var(--color-gray-800);
+    background-color: rgba(255, 255, 255, 0.05);
     color: var(--color-white);
-    border: 1px solid var(--color-white-10);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .btn-secondary .btn-glow {
+    background: radial-gradient(
+      circle at center,
+      rgba(255, 255, 255, 0.1) 0%,
+      transparent 70%
+    );
   }
 
   .btn-secondary:hover {
-    background-color: var(--color-gray-700);
-    border-color: var(--color-white-30);
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
   }
 
+  .btn-secondary:hover .btn-glow {
+    opacity: 1;
+  }
+
+  .btn-secondary:active {
+    transform: translateY(0);
+  }
+
+  /* Ghost Variant */
   .btn-ghost {
     background-color: transparent;
     color: var(--color-white);
   }
 
   .btn-ghost:hover {
-    background-color: var(--color-white-10);
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .btn-ghost:active {
+    background-color: rgba(255, 255, 255, 0.12);
   }
 
   /* Full Width */
   .btn-full {
     width: 100%;
+  }
+
+  /* Reduced Motion */
+  @media (prefers-reduced-motion: reduce) {
+    .btn,
+    .btn-glow {
+      transition: none;
+    }
+
+    .btn:hover {
+      transform: none;
+    }
   }
 </style>

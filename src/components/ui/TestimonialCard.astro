@@ -5,32 +5,27 @@ interface Props extends Testimonial {
   class?: string;
 }
 
-const { quote, rating, source, thumbsUp, class: className = '' } = Astro.props;
+const { quote, author, rating, class: className = '' } = Astro.props;
 
 const stars = Array(5).fill(null);
 ---
 
 <article class:list={['testimonial-card', className]}>
-  <!-- Liquid Glass Background -->
-  <div class="card-glass"></div>
-
   <div class="card-content">
-    <div class="testimonial-stars">
-      {stars.map((_, i) => (
-        <span class:list={['star', { filled: i < rating }]}>★</span>
-      ))}
-    </div>
+    <!-- Opening quote mark -->
+    <div class="quote-mark" aria-hidden="true">"</div>
 
-    <blockquote class="testimonial-quote">"{quote}"</blockquote>
+    <blockquote class="testimonial-quote">{quote}</blockquote>
 
     <footer class="testimonial-footer">
-      <span class="testimonial-source">{source}</span>
-      {thumbsUp && (
-        <span class="testimonial-thumbs">
-          <span class="thumbs-icon">👍</span>
-          {thumbsUp.toLocaleString()}
-        </span>
-      )}
+      <div class="testimonial-meta">
+        <span class="testimonial-author">{author}</span>
+        <div class="testimonial-stars" role="img" aria-label={`${rating} out of 5 stars`}>
+          {stars.map((_, i) => (
+            <span class:list={['star', { filled: i < rating }]} aria-hidden="true">★</span>
+          ))}
+        </div>
+      </div>
     </footer>
   </div>
 </article>
@@ -38,107 +33,86 @@ const stars = Array(5).fill(null);
 <style>
   .testimonial-card {
     position: relative;
-    border-radius: var(--radius-xl);
+    border-radius: var(--radius-2xl);
     min-width: 320px;
-    max-width: 400px;
+    max-width: 360px;
     flex-shrink: 0;
     overflow: hidden;
-    transition:
-      transform var(--transition-base),
-      box-shadow var(--transition-base);
-  }
-
-  .testimonial-card:hover {
-    transform: translateY(-4px) scale(1.01);
-  }
-
-  /* Liquid Glass Effect */
-  .card-glass {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
     background: linear-gradient(
       145deg,
       rgba(255, 255, 255, 0.06) 0%,
       rgba(255, 255, 255, 0.02) 50%,
       rgba(255, 255, 255, 0.04) 100%
     );
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: var(--radius-xl);
-    transition: all var(--transition-base);
-  }
-
-  .testimonial-card:hover .card-glass {
-    background: linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 0.08) 0%,
-      rgba(255, 255, 255, 0.03) 50%,
-      rgba(255, 255, 255, 0.06) 100%
-    );
-    border-color: rgba(255, 255, 255, 0.12);
-    box-shadow:
-      0 12px 40px rgba(0, 0, 0, 0.3),
-      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    /* Isolate to prevent rendering issues */
+    isolation: isolate;
+    contain: layout paint;
   }
 
   .card-content {
     position: relative;
-    z-index: 1;
     padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    min-height: 220px;
+  }
+
+  /* Large quote mark */
+  .quote-mark {
+    position: absolute;
+    top: var(--space-3);
+    left: var(--space-5);
+    font-size: 3.5rem;
+    font-family: Georgia, 'Times New Roman', serif;
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.06);
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .testimonial-quote {
+    font-size: var(--font-size-sm);
+    color: var(--color-white-70);
+    line-height: 1.75;
+    font-style: normal;
+    font-weight: 400;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding-top: var(--space-2);
+  }
+
+  .testimonial-footer {
+    padding-top: var(--space-4);
+    margin-top: auto;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .testimonial-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .testimonial-author {
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--color-white-50);
   }
 
   .testimonial-stars {
     display: flex;
     gap: 2px;
-    margin-bottom: var(--space-4);
   }
 
   .star {
-    font-size: var(--font-size-lg);
-    color: var(--color-white-20);
-    transition: color var(--transition-fast);
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.15);
   }
 
   .star.filled {
-    color: #FFD700;
-  }
-
-  .testimonial-quote {
-    font-size: var(--font-size-base);
-    color: var(--color-white);
-    line-height: 1.7;
-    margin-bottom: var(--space-4);
-    font-style: normal;
-    font-weight: 400;
-  }
-
-  .testimonial-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-4);
-    padding-top: var(--space-3);
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
-  }
-
-  .testimonial-source {
-    font-size: var(--font-size-sm);
-    color: var(--color-white-50);
-    font-weight: 500;
-  }
-
-  .testimonial-thumbs {
-    display: flex;
-    align-items: center;
-    gap: var(--space-1);
-    font-size: var(--font-size-sm);
-    color: var(--color-white-40);
-  }
-
-  .thumbs-icon {
-    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.5);
   }
 
   @media (max-width: 480px) {
@@ -149,17 +123,11 @@ const stars = Array(5).fill(null);
 
     .card-content {
       padding: var(--space-5);
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .testimonial-card,
-    .card-glass {
-      transition: none;
+      min-height: 200px;
     }
 
-    .testimonial-card:hover {
-      transform: none;
+    .quote-mark {
+      font-size: 3rem;
     }
   }
 </style>

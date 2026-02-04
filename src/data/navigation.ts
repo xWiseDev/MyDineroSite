@@ -5,15 +5,15 @@ export interface NavLink {
 }
 
 export const mainNavLinks: NavLink[] = [
-  { label: 'Features', href: '#features' },
-  { label: 'Release Notes', href: '/releases' },
+  { label: 'Features', href: '/#features' },
+  { label: 'Roadmap', href: '/roadmap' },
   { label: 'Contact', href: '/contact' }
 ];
 
 export const footerLinks = {
   product: [
-    { label: 'Features', href: '#features' },
-    { label: 'Release Notes', href: '/releases' }
+    { label: 'Features', href: '/#features' },
+    { label: 'Roadmap', href: '/roadmap' }
   ],
   support: [
     { label: 'Contact', href: '/contact' },

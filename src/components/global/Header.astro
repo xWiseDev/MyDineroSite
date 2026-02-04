@@ -112,9 +112,12 @@ const getHref = (href: string) => {
     display: block;
   }
 
-  .nav-cta :global(.nav-badge .badge-svg) {
-    width: 120px;
-    height: 40px;
+  .nav-cta :global(.app-store-badge:hover) {
+    transform: translateY(-1px) scale(1.02);
+  }
+
+  .nav-cta :global(.badge-img) {
+    width: 130px;
   }
 
   .nav-toggle {

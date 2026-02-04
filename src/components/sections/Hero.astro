@@ -264,9 +264,11 @@ import AppStoreBadge from '@/components/ui/AppStoreBadge.astro';
     height: auto;
     object-fit: contain;
     animation: float 6s ease-in-out 1s infinite;
-    /* Crisp image rendering for sharper downscaling */
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: crisp-edges;
+    /* High-quality image rendering */
+    image-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
 
   @keyframes float {

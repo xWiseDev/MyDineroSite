@@ -7,9 +7,9 @@ interface Props {
 const { size = 'md', showText = true } = Astro.props;
 
 const sizes = {
-  sm: { icon: 24, text: 'var(--font-size-base)' },
-  md: { icon: 32, text: 'var(--font-size-lg)' },
-  lg: { icon: 48, text: 'var(--font-size-2xl)' }
+  sm: { icon: 35, text: 'var(--font-size-base)' },
+  md: { icon: 46, text: 'var(--font-size-lg)' },
+  lg: { icon: 70, text: 'var(--font-size-2xl)' }
 };
 
 const currentSize = sizes[size];
@@ -37,7 +37,7 @@ const currentSize = sizes[size];
     width: var(--icon-size);
     height: var(--icon-size);
     flex-shrink: 0;
-    border-radius: 6px;
+    border-radius: 8px;
   }
 
   .logo-text {
