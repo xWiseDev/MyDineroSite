@@ -1,0 +1,52 @@
+---
+interface Props {
+  rating?: number;
+  showLabel?: boolean;
+  class?: string;
+}
+
+const {
+  rating = 4.9,
+  showLabel = true,
+  class: className = ''
+} = Astro.props;
+---
+
+<div class:list={['star-rating', className]}>
+  <div class="stars">
+    {Array(5).fill(null).map((_, i) => (
+      <span class="star">★</span>
+    ))}
+  </div>
+  {showLabel && (
+    <span class="rating-label">{rating} worldwide rating</span>
+  )}
+</div>
+
+<style>
+  .star-rating {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    background-color: var(--color-white-10);
+    border-radius: var(--radius-full);
+    border: 1px solid var(--color-white-10);
+  }
+
+  .stars {
+    display: flex;
+    gap: 2px;
+  }
+
+  .star {
+    color: #FFD700;
+    font-size: var(--font-size-sm);
+  }
+
+  .rating-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-white-70);
+    font-weight: 500;
+  }
+</style>

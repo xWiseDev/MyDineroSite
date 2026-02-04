@@ -1,0 +1,296 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import Button from '@/components/ui/Button.astro';
+
+export async function getStaticPaths() {
+  const releases = await getCollection('releases');
+  return releases.map(release => ({
+    params: { slug: release.slug },
+    props: { release }
+  }));
+}
+
+const { release } = Astro.props;
+const { Content } = await release.render();
+
+function formatDate(date: Date): string {
+  return new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  }).format(date);
+}
+
+function getChangeTypeIcon(type: string): string {
+  switch (type) {
+    case 'feature': return '✨';
+    case 'improvement': return '⚡';
+    case 'fix': return '🐛';
+    default: return '•';
+  }
+}
+---
+
+<BaseLayout
+  title={`v${release.data.version} - ${release.data.title}`}
+  description={`Release notes for MyDinero v${release.data.version}. ${release.data.highlights[0] || ''}`}
+  type="article"
+  publishedTime={release.data.date.toISOString()}
+>
+  <div class="release-page">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="/releases">← Back to all releases</a>
+      </nav>
+
+      <article class="release-content">
+        <header class="release-header">
+          <div class="release-meta">
+            <span class="release-version">v{release.data.version}</span>
+            <span class="release-date">{formatDate(release.data.date)}</span>
+          </div>
+          <h1>{release.data.title}</h1>
+        </header>
+
+        {release.data.highlights.length > 0 && (
+          <section class="release-highlights">
+            <h2>Highlights</h2>
+            <ul>
+              {release.data.highlights.map((highlight) => (
+                <li>{highlight}</li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        <section class="release-changes">
+          <h2>What's Changed</h2>
+          <ul>
+            {release.data.changes.map((change) => (
+              <li class={`change-${change.type}`}>
+                <span class="change-icon">{getChangeTypeIcon(change.type)}</span>
+                <span class="change-type">{change.type}</span>
+                <span class="change-description">{change.description}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section class="release-body prose">
+          <Content />
+        </section>
+
+        <footer class="release-footer">
+          <p>Have feedback about this release?</p>
+          <div class="footer-actions">
+            <Button href="/contact" variant="secondary" size="sm">
+              Contact Us
+            </Button>
+            <Button href="https://apps.apple.com/app/mydinero" variant="primary" size="sm">
+              Update Now
+            </Button>
+          </div>
+        </footer>
+      </article>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .release-page {
+    padding-top: calc(72px + var(--space-12));
+    padding-bottom: var(--space-16);
+  }
+
+  .breadcrumb {
+    margin-bottom: var(--space-8);
+  }
+
+  .breadcrumb a {
+    color: var(--color-white-50);
+    font-size: var(--font-size-sm);
+    transition: color var(--transition-fast);
+  }
+
+  .breadcrumb a:hover {
+    color: var(--color-green-500);
+  }
+
+  .release-content {
+    max-width: 720px;
+    margin-inline: auto;
+  }
+
+  .release-header {
+    margin-bottom: var(--space-8);
+    padding-bottom: var(--space-6);
+    border-bottom: 1px solid var(--color-white-10);
+  }
+
+  .release-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin-bottom: var(--space-4);
+  }
+
+  .release-version {
+    background: var(--gradient-green);
+    color: var(--color-black);
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-full);
+  }
+
+  .release-date {
+    font-size: var(--font-size-sm);
+    color: var(--color-white-50);
+  }
+
+  .release-header h1 {
+    font-size: var(--font-size-3xl);
+  }
+
+  .release-highlights,
+  .release-changes {
+    margin-bottom: var(--space-8);
+  }
+
+  .release-highlights h2,
+  .release-changes h2 {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--space-4);
+  }
+
+  .release-highlights ul {
+    list-style: none;
+    background-color: var(--color-gray-800);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4) var(--space-6);
+  }
+
+  .release-highlights li {
+    position: relative;
+    padding-left: var(--space-5);
+    margin-bottom: var(--space-2);
+    color: var(--color-white);
+  }
+
+  .release-highlights li:last-child {
+    margin-bottom: 0;
+  }
+
+  .release-highlights li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--color-green-500);
+  }
+
+  .release-changes ul {
+    list-style: none;
+  }
+
+  .release-changes li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    background-color: var(--color-gray-800);
+    border-radius: var(--radius-md);
+  }
+
+  .change-icon {
+    flex-shrink: 0;
+    font-size: 1.1rem;
+  }
+
+  .change-type {
+    flex-shrink: 0;
+    font-weight: 600;
+    text-transform: capitalize;
+    min-width: 100px;
+    font-size: var(--font-size-sm);
+  }
+
+  .change-feature .change-type { color: var(--color-green-500); }
+  .change-improvement .change-type { color: #FFD700; }
+  .change-fix .change-type { color: #FF6B6B; }
+
+  .change-description {
+    color: var(--color-white-70);
+  }
+
+  /* Prose Styles for Markdown Content */
+  .release-body {
+    margin-bottom: var(--space-8);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--color-white-10);
+  }
+
+  .prose :global(h2) {
+    font-size: var(--font-size-xl);
+    margin-top: var(--space-8);
+    margin-bottom: var(--space-4);
+  }
+
+  .prose :global(h3) {
+    font-size: var(--font-size-lg);
+    margin-top: var(--space-6);
+    margin-bottom: var(--space-3);
+  }
+
+  .prose :global(p) {
+    margin-bottom: var(--space-4);
+    line-height: 1.7;
+  }
+
+  .prose :global(ul),
+  .prose :global(ol) {
+    margin-bottom: var(--space-4);
+    padding-left: var(--space-6);
+  }
+
+  .prose :global(li) {
+    margin-bottom: var(--space-2);
+    color: var(--color-white-70);
+  }
+
+  .prose :global(strong) {
+    color: var(--color-white);
+    font-weight: 600;
+  }
+
+  .prose :global(a) {
+    color: var(--color-green-500);
+  }
+
+  .prose :global(code) {
+    background-color: var(--color-gray-800);
+    padding: 0.2em 0.4em;
+    border-radius: var(--radius-sm);
+    font-size: 0.9em;
+  }
+
+  .release-footer {
+    background-color: var(--color-gray-800);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    text-align: center;
+  }
+
+  .release-footer p {
+    color: var(--color-white);
+    margin-bottom: var(--space-4);
+  }
+
+  .footer-actions {
+    display: flex;
+    gap: var(--space-4);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+</style>

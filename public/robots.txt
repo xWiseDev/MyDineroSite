@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mydinero.app/sitemap-index.xml

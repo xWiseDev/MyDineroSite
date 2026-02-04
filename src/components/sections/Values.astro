@@ -1,0 +1,107 @@
+---
+import { values } from '@/data/values';
+import ValueCard from '@/components/ui/ValueCard.astro';
+---
+
+<section class="section values">
+  <div class="container">
+    <header class="section-header scroll-animate">
+      <span class="section-eyebrow">Our Promise</span>
+      <h2 class="section-title">
+        Built for <span class="title-highlight">Privacy</span>
+      </h2>
+      <p class="section-subtitle">
+        A budget planner that respects your data. Simple, private, and stress-free.
+        Your finances stay yours.
+      </p>
+    </header>
+
+    <div class="values-grid">
+      {values.map((value, index) => (
+        <ValueCard {...value} stagger={index + 1} />
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .values {
+    background: var(--color-black);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Subtle ambient glow */
+  .values::before {
+    content: '';
+    position: absolute;
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.02), transparent 60%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: var(--space-12);
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-eyebrow {
+    display: inline-block;
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--color-white-50);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: var(--space-4);
+  }
+
+  .section-title {
+    margin-bottom: var(--space-4);
+    line-height: 1.1;
+  }
+
+  .title-highlight {
+    position: relative;
+    display: inline-block;
+  }
+
+  .title-highlight::after {
+    content: '';
+    position: absolute;
+    bottom: 0.1em;
+    left: 0;
+    right: 0;
+    height: 0.1em;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
+    border-radius: var(--radius-full);
+  }
+
+  .section-subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--color-white-50);
+    max-width: 520px;
+    margin-inline: auto;
+    line-height: 1.7;
+  }
+
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+    position: relative;
+    z-index: 1;
+  }
+
+  @media (max-width: 768px) {
+    .values-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+    }
+  }
+</style>

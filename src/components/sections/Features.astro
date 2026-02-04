@@ -1,0 +1,249 @@
+---
+import { features } from '@/data/features';
+import Icon from '@/components/ui/Icon.astro';
+---
+
+<section id="features" class="section features">
+  <div class="container">
+    <div class="features-list">
+      {features.map((feature, index) => (
+        <article class={`feature-card scroll-animate ${index % 2 === 1 ? 'feature-card-reverse' : ''}`}>
+          <!-- Liquid Glass Background -->
+          <div class="card-glass"></div>
+
+          <!-- Content Side -->
+          <div class="feature-content">
+            <div class="feature-icon">
+              <Icon name={feature.icon} size={24} />
+            </div>
+            <h2 class="feature-title">{feature.title}</h2>
+            <p class="feature-tagline">{feature.tagline}</p>
+            <p class="feature-description">{feature.description}</p>
+          </div>
+
+          <!-- Mockup Side - Bottom cropped -->
+          <div class="feature-visual">
+            <img
+              src={feature.image}
+              alt={`${feature.title} - ${feature.tagline}`}
+              loading="lazy"
+              class="feature-image"
+            />
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .features {
+    background: var(--color-black);
+  }
+
+  .features-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  /* Feature Card - Liquid Glass Container */
+  .feature-card {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    min-height: 420px;
+    border-radius: var(--radius-2xl);
+    overflow: hidden;
+  }
+
+  /* Liquid Glass Background */
+  .card-glass {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.06) 0%,
+      rgba(255, 255, 255, 0.02) 50%,
+      rgba(255, 255, 255, 0.04) 100%
+    );
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-2xl);
+    transition: all var(--transition-slow);
+  }
+
+  .feature-card:hover .card-glass {
+    background: linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(255, 255, 255, 0.03) 50%,
+      rgba(255, 255, 255, 0.06) 100%
+    );
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow:
+      0 20px 60px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  /* Content Side */
+  .feature-content {
+    position: relative;
+    z-index: 2;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--space-10);
+    max-width: 50%;
+  }
+
+  .feature-icon {
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(255, 255, 255, 0.05) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-xl);
+    color: var(--color-white);
+    margin-bottom: var(--space-5);
+    transition: all var(--transition-base);
+  }
+
+  .feature-card:hover .feature-icon {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.15) 0%,
+      rgba(255, 255, 255, 0.08) 100%
+    );
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: scale(1.05);
+  }
+
+  .feature-title {
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    font-weight: 700;
+    color: var(--color-white);
+    margin-bottom: var(--space-2);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  .feature-tagline {
+    font-size: var(--font-size-sm);
+    color: var(--color-white-50);
+    font-weight: 500;
+    margin-bottom: var(--space-4);
+  }
+
+  .feature-description {
+    font-size: var(--font-size-sm);
+    color: var(--color-white-50);
+    line-height: 1.7;
+    max-width: 380px;
+  }
+
+  /* Visual Side - Mockup with bottom cropped */
+  .feature-visual {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    max-width: 50%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: var(--space-8);
+    overflow: hidden;
+  }
+
+  .feature-image {
+    width: auto;
+    height: 624px;
+    max-width: none;
+    object-fit: contain;
+    object-position: top center;
+    /* Crisp image rendering */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    transition: transform var(--transition-slow);
+  }
+
+  .feature-card:hover .feature-image {
+    transform: translateY(-8px);
+  }
+
+  /* Reverse layout */
+  .feature-card-reverse {
+    flex-direction: row-reverse;
+  }
+
+  /* Responsive */
+  @media (max-width: 868px) {
+    .feature-card,
+    .feature-card-reverse {
+      flex-direction: column;
+      min-height: auto;
+    }
+
+    .feature-content {
+      max-width: 100%;
+      padding: var(--space-8) var(--space-6);
+      text-align: center;
+      align-items: center;
+    }
+
+    .feature-description {
+      max-width: 480px;
+    }
+
+    .feature-visual {
+      max-width: 100%;
+      height: 280px;
+      justify-content: center;
+      padding: 0 var(--space-6);
+    }
+
+    .feature-image {
+      height: 432px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .feature-content {
+      padding: var(--space-6) var(--space-4);
+    }
+
+    .feature-title {
+      font-size: var(--font-size-xl);
+    }
+
+    .feature-visual {
+      height: 220px;
+      padding: 0 var(--space-4);
+    }
+
+    .feature-image {
+      height: 360px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .feature-icon,
+    .feature-image,
+    .card-glass {
+      transition: none;
+    }
+
+    .feature-card:hover .feature-icon,
+    .feature-card:hover .feature-image {
+      transform: none;
+    }
+  }
+</style>

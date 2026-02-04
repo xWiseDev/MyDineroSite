@@ -1,0 +1,168 @@
+---
+import type { PricingPlan } from '@/data/pricing';
+import Button from '@/components/ui/Button.astro';
+
+interface Props extends PricingPlan {
+  class?: string;
+}
+
+const {
+  name,
+  price,
+  period,
+  trial,
+  features,
+  featured = false,
+  badge,
+  note,
+  class: className = ''
+} = Astro.props;
+---
+
+<article
+  class:list={['pricing-card', { 'pricing-card-featured': featured }, 'scroll-animate', className]}
+>
+  {badge && <span class="pricing-badge">{badge}</span>}
+  <header class="pricing-header">
+    <h3 class="pricing-name">{name}</h3>
+    <div class="pricing-price">
+      <span class="price-amount">{price}</span>
+      <span class="price-period">{period}</span>
+    </div>
+    <p class="pricing-trial">{trial}</p>
+    {note && <p class="pricing-note">{note}</p>}
+  </header>
+  <ul class="pricing-features">
+    {features.map(feature => (
+      <li class="pricing-feature">
+        <span class="feature-check">✓</span>
+        {feature}
+      </li>
+    ))}
+  </ul>
+  <footer class="pricing-footer">
+    <Button
+      href="https://apps.apple.com/app/mydinero"
+      variant={featured ? 'primary' : 'secondary'}
+      fullWidth
+    >
+      Start Free Trial
+    </Button>
+  </footer>
+</article>
+
+<style>
+  .pricing-card {
+    position: relative;
+    background-color: var(--color-gray-800);
+    border: 1px solid var(--color-white-10);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-8);
+    display: flex;
+    flex-direction: column;
+    transition:
+      transform var(--transition-base),
+      box-shadow var(--transition-base);
+  }
+
+  .pricing-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .pricing-card-featured {
+    border-color: var(--color-green-500);
+    box-shadow: var(--shadow-glow);
+    background: var(--gradient-card);
+  }
+
+  .pricing-card-featured:hover {
+    box-shadow: var(--shadow-glow-lg);
+  }
+
+  .pricing-badge {
+    position: absolute;
+    top: -12px;
+    right: var(--space-6);
+    background: var(--gradient-green);
+    color: var(--color-black);
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-full);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .pricing-header {
+    text-align: center;
+    margin-bottom: var(--space-6);
+    padding-bottom: var(--space-6);
+    border-bottom: 1px solid var(--color-white-10);
+  }
+
+  .pricing-name {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--color-white);
+    margin-bottom: var(--space-4);
+  }
+
+  .pricing-price {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: var(--space-1);
+    margin-bottom: var(--space-2);
+  }
+
+  .price-amount {
+    font-size: var(--font-size-4xl);
+    font-weight: 700;
+    color: var(--color-white);
+  }
+
+  .price-period {
+    font-size: var(--font-size-base);
+    color: var(--color-white-50);
+  }
+
+  .pricing-trial {
+    font-size: var(--font-size-sm);
+    color: var(--color-green-500);
+    font-weight: 500;
+  }
+
+  .pricing-note {
+    font-size: var(--font-size-sm);
+    color: var(--color-white-70);
+    margin-top: var(--space-2);
+  }
+
+  .pricing-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-bottom: var(--space-8);
+    flex-grow: 1;
+  }
+
+  .pricing-feature {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    font-size: var(--font-size-sm);
+    color: var(--color-white-70);
+  }
+
+  .feature-check {
+    color: var(--color-green-500);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .pricing-footer {
+    margin-top: auto;
+  }
+</style>

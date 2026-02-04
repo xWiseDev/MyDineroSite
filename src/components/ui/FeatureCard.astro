@@ -1,0 +1,95 @@
+---
+import type { Feature } from '@/data/features';
+import Icon from '@/components/ui/Icon.astro';
+
+interface Props extends Feature {
+  stagger?: number;
+}
+
+const { icon, title, tagline, description, image, stagger = 0 } = Astro.props;
+---
+
+<article
+  class:list={['feature-card', 'scroll-animate', { [`stagger-${stagger}`]: stagger > 0 }]}
+>
+  <div class="feature-icon">
+    <Icon name={icon} size={32} />
+  </div>
+  <h3 class="feature-title">{title}</h3>
+  <p class="feature-tagline">{tagline}</p>
+  <p class="feature-description">{description}</p>
+  {image && (
+    <div class="feature-image-wrap">
+      <img
+        src={image}
+        alt={`${title} feature screenshot`}
+        loading="lazy"
+        class="feature-image"
+      />
+    </div>
+  )}
+</article>
+
+<style>
+  .feature-card {
+    background-color: var(--color-gray-800);
+    border: 1px solid var(--color-white-10);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    transition:
+      transform var(--transition-base),
+      box-shadow var(--transition-base),
+      border-color var(--transition-base);
+  }
+
+  .feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--color-white-30);
+  }
+
+  .feature-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-white-10);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-4);
+    color: var(--color-white);
+  }
+
+  .feature-title {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    color: var(--color-white);
+    margin-bottom: var(--space-2);
+  }
+
+  .feature-tagline {
+    font-size: var(--font-size-sm);
+    color: var(--color-white-70);
+    font-weight: 500;
+    margin-bottom: var(--space-4);
+  }
+
+  .feature-description {
+    font-size: var(--font-size-sm);
+    color: var(--color-white-50);
+    line-height: 1.6;
+  }
+
+  .feature-image-wrap {
+    margin-top: var(--space-6);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background-color: var(--color-gray-900);
+  }
+
+  .feature-image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+</style>

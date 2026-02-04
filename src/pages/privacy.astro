@@ -1,0 +1,208 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Privacy Policy"
+  description="MyDinero Privacy Policy. Learn how we protect your data and respect your privacy. No data collection, no tracking, no bank connections."
+>
+  <div class="legal-page">
+    <div class="container">
+      <article class="legal-content">
+        <header class="legal-header">
+          <h1>Privacy Policy</h1>
+          <p class="legal-updated">Last updated: January 15, 2025</p>
+        </header>
+
+        <section class="legal-section highlight-section">
+          <h2>The Short Version</h2>
+          <p class="highlight-text">
+            MyDinero does not collect, store, or sell your personal data. Period.
+          </p>
+          <p>
+            Your expense data stays on your devices and syncs through your personal iCloud account.
+            We have no access to your financial information, and we never will.
+          </p>
+        </section>
+
+        <section class="legal-section">
+          <h2>What Data We Collect</h2>
+          <p><strong>None.</strong></p>
+          <p>
+            We don't collect any personal information. We don't require an email address,
+            phone number, or any form of account creation. You download the app and start using it.
+          </p>
+          <p>
+            Your expense entries, categories, budgets, and all other app data are stored locally
+            on your device and optionally synced to your personal iCloud account — which only you control.
+          </p>
+        </section>
+
+        <section class="legal-section">
+          <h2>iCloud Sync</h2>
+          <p>
+            MyDinero uses Apple's iCloud to sync your data across your devices (iPhone and iPad).
+            This sync happens through your personal Apple Account and is protected by Apple's
+            industry-leading privacy and security measures.
+          </p>
+          <p>
+            We never see, access, or process your synced data. The sync happens directly between
+            your devices and Apple's servers — we are not involved in that process.
+          </p>
+        </section>
+
+        <section class="legal-section">
+          <h2>Analytics</h2>
+          <p>
+            We do not use any third-party analytics services. We do not track how you use the app,
+            what screens you visit, or any other usage patterns.
+          </p>
+          <p>
+            If you choose to submit a bug report or feature request through the app, that
+            communication is sent directly to our support email and handled manually.
+          </p>
+        </section>
+
+        <section class="legal-section">
+          <h2>Third Parties</h2>
+          <p>
+            MyDinero does not share any data with third parties because we don't have any data to share.
+          </p>
+          <p>
+            The only "third party" involved is Apple, which provides the App Store distribution
+            and iCloud sync services. Their privacy practices are governed by
+            <a href="https://www.apple.com/privacy/" target="_blank" rel="noopener noreferrer">Apple's Privacy Policy</a>.
+          </p>
+        </section>
+
+        <section class="legal-section">
+          <h2>Bank Connections</h2>
+          <p>
+            MyDinero does not connect to banks, credit cards, or any financial institutions.
+            This is by design. We believe manual expense tracking gives you more control
+            and awareness of your spending — and it means your financial credentials
+            are never at risk.
+          </p>
+        </section>
+
+        <section class="legal-section">
+          <h2>Data Deletion</h2>
+          <p>
+            Since all your data is stored locally on your device and in your personal iCloud,
+            you have complete control over it:
+          </p>
+          <ul>
+            <li>Delete the app to remove all local data</li>
+            <li>Use the in-app "Delete All Data" option in Settings</li>
+            <li>Manage your iCloud storage through iOS Settings</li>
+          </ul>
+          <p>
+            We cannot delete your data because we don't have it.
+          </p>
+        </section>
+
+        <section class="legal-section">
+          <h2>Children's Privacy</h2>
+          <p>
+            MyDinero does not knowingly collect data from anyone, including children under 13.
+            Since we collect no data, there is no personal information from children to protect.
+          </p>
+        </section>
+
+        <section class="legal-section">
+          <h2>Changes to This Policy</h2>
+          <p>
+            We may update this privacy policy from time to time. If we make significant changes,
+            we will notify users through the app. The current version will always be available
+            on this page with the "Last updated" date.
+          </p>
+        </section>
+
+        <section class="legal-section">
+          <h2>Contact</h2>
+          <p>
+            If you have questions about this privacy policy or our privacy practices,
+            please contact us at:
+          </p>
+          <p>
+            <a href="mailto:privacy@mydinero.app">privacy@mydinero.app</a>
+          </p>
+        </section>
+      </article>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .legal-page {
+    padding-top: calc(72px + var(--space-16));
+    padding-bottom: var(--space-16);
+  }
+
+  .legal-content {
+    max-width: 720px;
+    margin-inline: auto;
+  }
+
+  .legal-header {
+    margin-bottom: var(--space-12);
+  }
+
+  .legal-header h1 {
+    font-size: var(--font-size-4xl);
+    margin-bottom: var(--space-4);
+  }
+
+  .legal-updated {
+    color: var(--color-white-50);
+    font-size: var(--font-size-sm);
+  }
+
+  .legal-section {
+    margin-bottom: var(--space-10);
+  }
+
+  .legal-section h2 {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--space-4);
+    color: var(--color-white);
+  }
+
+  .legal-section p {
+    margin-bottom: var(--space-4);
+    line-height: 1.7;
+  }
+
+  .legal-section ul {
+    margin-bottom: var(--space-4);
+    padding-left: var(--space-6);
+  }
+
+  .legal-section li {
+    margin-bottom: var(--space-2);
+    color: var(--color-white-70);
+  }
+
+  .legal-section a {
+    color: var(--color-green-500);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .legal-section a:hover {
+    color: var(--color-green-400);
+  }
+
+  .highlight-section {
+    background-color: var(--color-gray-800);
+    border: 1px solid var(--color-green-500);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+  }
+
+  .highlight-text {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--color-green-500);
+  }
+</style>

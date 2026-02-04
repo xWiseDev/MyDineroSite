@@ -1,0 +1,53 @@
+---
+interface Props {
+  href?: string;
+  class?: string;
+}
+
+const {
+  href = 'https://apps.apple.com/app/mydinero',
+  class: className = ''
+} = Astro.props;
+---
+
+<a
+  href={href}
+  class:list={['app-store-badge', className]}
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Download on the App Store"
+>
+  <img
+    src="/images/app-store-download-badge.svg"
+    alt="Download on the App Store"
+    class="badge-img"
+  />
+</a>
+
+<style>
+  .app-store-badge {
+    display: inline-block;
+    transition: transform var(--transition-fast), opacity var(--transition-fast);
+  }
+
+  .app-store-badge:hover {
+    transform: scale(1.02);
+    opacity: 0.9;
+  }
+
+  .app-store-badge:active {
+    transform: scale(0.98);
+  }
+
+  .badge-img {
+    width: 150px;
+    height: auto;
+    display: block;
+  }
+
+  @media (max-width: 480px) {
+    .badge-img {
+      width: 135px;
+    }
+  }
+</style>

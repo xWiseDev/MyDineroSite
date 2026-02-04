@@ -1,0 +1,49 @@
+---
+interface Props {
+  size?: 'sm' | 'md' | 'lg';
+  showText?: boolean;
+}
+
+const { size = 'md', showText = true } = Astro.props;
+
+const sizes = {
+  sm: { icon: 24, text: 'var(--font-size-base)' },
+  md: { icon: 32, text: 'var(--font-size-lg)' },
+  lg: { icon: 48, text: 'var(--font-size-2xl)' }
+};
+
+const currentSize = sizes[size];
+---
+
+<div class="logo" style={`--icon-size: ${currentSize.icon}px; --text-size: ${currentSize.text};`}>
+  <img
+    src="/images/expense-tracker-original.png"
+    alt="MyDinero"
+    class="logo-icon"
+    width={currentSize.icon}
+    height={currentSize.icon}
+  />
+  {showText && <span class="logo-text">MyDinero</span>}
+</div>
+
+<style>
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .logo-icon {
+    width: var(--icon-size);
+    height: var(--icon-size);
+    flex-shrink: 0;
+    border-radius: 6px;
+  }
+
+  .logo-text {
+    font-size: var(--text-size);
+    font-weight: 600;
+    color: var(--color-white);
+    letter-spacing: -0.01em;
+  }
+</style>

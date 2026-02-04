@@ -1,0 +1,99 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Button from '@/components/ui/Button.astro';
+---
+
+<BaseLayout
+  title="Page Not Found"
+  description="The page you're looking for doesn't exist."
+  noindex={true}
+>
+  <div class="error-page">
+    <div class="container">
+      <div class="error-content">
+        <div class="error-icon">&#x1F4B8;</div>
+        <h1>404</h1>
+        <p class="error-title">Page Not Found</p>
+        <p class="error-message">
+          Looks like this expense got lost in the books.
+          The page you're looking for doesn't exist.
+        </p>
+        <div class="error-actions">
+          <Button href="/" variant="primary">
+            Go Home
+          </Button>
+          <Button href="/contact" variant="secondary">
+            Contact Support
+          </Button>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .error-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-block: var(--space-16);
+  }
+
+  .error-content {
+    text-align: center;
+    max-width: 480px;
+  }
+
+  .error-icon {
+    font-size: 4rem;
+    margin-bottom: var(--space-4);
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  h1 {
+    font-size: 8rem;
+    font-weight: 700;
+    line-height: 1;
+    background: var(--gradient-green);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: var(--space-2);
+  }
+
+  .error-title {
+    font-size: var(--font-size-2xl);
+    font-weight: 600;
+    color: var(--color-white);
+    margin-bottom: var(--space-4);
+  }
+
+  .error-message {
+    color: var(--color-white-70);
+    margin-bottom: var(--space-8);
+    line-height: 1.6;
+  }
+
+  .error-actions {
+    display: flex;
+    gap: var(--space-4);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .error-icon {
+      animation: none;
+    }
+  }
+</style>

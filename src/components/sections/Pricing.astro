@@ -1,0 +1,56 @@
+---
+import { pricingPlans } from '@/data/pricing';
+import PricingCard from '@/components/ui/PricingCard.astro';
+---
+
+<section id="pricing" class="section pricing">
+  <div class="container">
+    <header class="section-header scroll-animate">
+      <h2 class="section-title">
+        Simple Pricing.<br />
+        <span class="text-green">No Surprises.</span>
+      </h2>
+      <p class="section-subtitle">
+        We analyzed 185+ reviews complaining about confusing pricing. Ours isn't.
+      </p>
+    </header>
+
+    <div class="pricing-grid">
+      {pricingPlans.map((plan, index) => (
+        <PricingCard {...plan} />
+      ))}
+    </div>
+
+    <p class="pricing-note scroll-animate">
+      Cancel anytime. Your data stays yours even if you cancel.
+    </p>
+  </div>
+</section>
+
+<style>
+  .pricing {
+    background-color: var(--color-black);
+  }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-6);
+    max-width: 720px;
+    margin-inline: auto;
+  }
+
+  .pricing-note {
+    text-align: center;
+    margin-top: var(--space-8);
+    font-size: var(--font-size-sm);
+    color: var(--color-white-50);
+  }
+
+  @media (max-width: 640px) {
+    .pricing-grid {
+      grid-template-columns: 1fr;
+      max-width: 360px;
+    }
+  }
+</style>

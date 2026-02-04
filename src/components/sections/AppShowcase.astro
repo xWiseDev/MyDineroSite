@@ -1,0 +1,143 @@
+---
+import PhoneMockup from '@/components/ui/PhoneMockup.astro';
+
+const screens = [
+  {
+    image: '/images/feature-daily-totals.png',
+    alt: 'Spending tracker showing daily expense totals',
+    label: 'Daily Totals'
+  },
+  {
+    image: '/images/feature-recurring.png',
+    alt: 'Recurring transactions management in budget planner',
+    label: 'Recurring'
+  },
+  {
+    image: '/images/feature-budgets.png',
+    alt: 'Budget tracking with progress indicators',
+    label: 'Budgets'
+  },
+  {
+    image: '/images/feature-categories.png',
+    alt: 'Expense categories and subcategories',
+    label: 'Categories'
+  }
+];
+---
+
+<section class="section app-showcase">
+  <div class="container">
+    <header class="section-header scroll-animate">
+      <h2 class="section-title">
+        Your Money Manager<br />
+        In Action
+      </h2>
+      <p class="section-subtitle">
+        Clean, intuitive screens that make tracking expenses feel effortless.
+      </p>
+    </header>
+
+    <div class="showcase-carousel scroll-animate">
+      <div class="carousel-track">
+        {screens.map((screen, index) => (
+          <div class="carousel-item">
+            <PhoneMockup
+              image={screen.image}
+              alt={screen.alt}
+              float={false}
+              glow={false}
+            />
+            <span class="carousel-label">{screen.label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Mobile scroll hint -->
+    <div class="scroll-hint">
+      <span>Swipe to explore</span>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M5 12h14M12 5l7 7-7 7" />
+      </svg>
+    </div>
+  </div>
+</section>
+
+<style>
+  .app-showcase {
+    background-color: var(--color-gray-900);
+    overflow: hidden;
+  }
+
+  .showcase-carousel {
+    position: relative;
+    margin-inline: calc(var(--container-padding) * -1);
+    padding-inline: var(--container-padding);
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--container-padding);
+  }
+
+  .showcase-carousel::-webkit-scrollbar {
+    display: none;
+  }
+
+  .carousel-track {
+    display: flex;
+    gap: var(--space-8);
+    padding-block: var(--space-8);
+    width: max-content;
+  }
+
+  .carousel-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4);
+    scroll-snap-align: center;
+    flex-shrink: 0;
+  }
+
+  .carousel-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-white-50);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .scroll-hint {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+    color: var(--color-white-50);
+    font-size: var(--font-size-sm);
+  }
+
+  @media (max-width: 968px) {
+    .scroll-hint {
+      display: flex;
+    }
+
+    .carousel-track {
+      padding-left: var(--space-6);
+      padding-right: var(--space-6);
+    }
+  }
+
+  /* Center items on desktop */
+  @media (min-width: 1200px) {
+    .showcase-carousel {
+      overflow: visible;
+    }
+
+    .carousel-track {
+      justify-content: center;
+    }
+  }
+</style>

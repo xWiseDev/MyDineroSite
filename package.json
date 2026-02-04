@@ -1,0 +1,19 @@
+{
+  "name": "mydinero-site",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Landing page for MyDinero - Simple expense tracking app",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^4.3.13",
+    "@astrojs/sitemap": "^3.7.0",
+    "astro": "^5.17.1",
+    "sharp": "^0.34.5"
+  }
+}

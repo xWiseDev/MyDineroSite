@@ -1,0 +1,294 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Contact Us"
+  description="Get in touch with the MyDinero team. Submit feature requests, report bugs, or ask questions about our expense tracking app."
+>
+  <div class="contact-page">
+    <div class="container">
+      <header class="page-header">
+        <h1>Get in Touch</h1>
+        <p class="page-subtitle">
+          We'd love to hear from you. Whether it's a feature request, bug report,
+          or just a question — we're here to help.
+        </p>
+      </header>
+
+      <div class="contact-grid">
+        <div class="contact-card">
+          <div class="contact-icon">&#x1F4E7;</div>
+          <h2>General Support</h2>
+          <p>Questions about the app, your subscription, or anything else.</p>
+          <a href="mailto:support@mydinero.app" class="contact-email">
+            support@mydinero.app
+          </a>
+          <p class="response-time">We typically respond within 24 hours.</p>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-icon">&#x1F4A1;</div>
+          <h2>Feature Requests</h2>
+          <p>Got an idea to make MyDinero better? We're all ears.</p>
+          <a href="mailto:features@mydinero.app" class="contact-email">
+            features@mydinero.app
+          </a>
+          <p class="response-time">We read every suggestion and prioritize based on demand.</p>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-icon">&#x1F41B;</div>
+          <h2>Bug Reports</h2>
+          <p>Found something broken? Let us know so we can fix it fast.</p>
+          <a href="mailto:bugs@mydinero.app" class="contact-email">
+            bugs@mydinero.app
+          </a>
+          <p class="response-time">Include your iOS version and steps to reproduce if possible.</p>
+        </div>
+      </div>
+
+      <section id="faq" class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary class="faq-question">How do I cancel my subscription?</summary>
+            <div class="faq-answer">
+              <p>
+                Subscriptions are managed through Apple. To cancel:
+              </p>
+              <ol>
+                <li>Open the Settings app on your iPhone</li>
+                <li>Tap your name at the top</li>
+                <li>Tap "Subscriptions"</li>
+                <li>Find MyDinero and tap it</li>
+                <li>Tap "Cancel Subscription"</li>
+              </ol>
+              <p>
+                You'll continue to have access until the end of your current billing period.
+              </p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-question">Can I get a refund?</summary>
+            <div class="faq-answer">
+              <p>
+                Refunds are handled by Apple, not by us directly. You can request a refund
+                through Apple's "Report a Problem" page at
+                <a href="https://reportaproblem.apple.com" target="_blank" rel="noopener noreferrer">reportaproblem.apple.com</a>.
+              </p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-question">Is my data backed up?</summary>
+            <div class="faq-answer">
+              <p>
+                Yes, if you have iCloud enabled. MyDinero automatically syncs your data
+                to your personal iCloud account. This means your data is backed up and
+                available across all your iOS devices.
+              </p>
+              <p>
+                To ensure iCloud sync is enabled, go to Settings > [Your Name] > iCloud
+                and make sure MyDinero is turned on.
+              </p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-question">Can I export my data?</summary>
+            <div class="faq-answer">
+              <p>
+                Yes! You can export your transactions as a CSV file from the app.
+                Go to Settings > Export Data in the app to generate your export.
+              </p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-question">Why doesn't MyDinero connect to my bank?</summary>
+            <div class="faq-answer">
+              <p>
+                By design. We built MyDinero for people who prefer manual expense tracking.
+                Research shows that manually entering expenses increases financial awareness
+                and helps build better spending habits.
+              </p>
+              <p>
+                Plus, no bank connection means no risk of your credentials being compromised,
+                and complete privacy for your financial data.
+              </p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-question">Is there an Android version?</summary>
+            <div class="faq-answer">
+              <p>
+                Not currently. MyDinero is built exclusively for iOS to provide the best
+                possible experience on iPhone and iPad. We may consider Android in the future
+                based on demand.
+              </p>
+            </div>
+          </details>
+        </div>
+      </section>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .contact-page {
+    padding-top: calc(72px + var(--space-16));
+    padding-bottom: var(--space-16);
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: var(--space-16);
+  }
+
+  .page-header h1 {
+    font-size: var(--font-size-4xl);
+    margin-bottom: var(--space-4);
+  }
+
+  .page-subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--color-white-70);
+    max-width: 560px;
+    margin-inline: auto;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+    margin-bottom: var(--space-20);
+  }
+
+  .contact-card {
+    background-color: var(--color-gray-800);
+    border: 1px solid var(--color-white-10);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    text-align: center;
+    transition: border-color var(--transition-base);
+  }
+
+  .contact-card:hover {
+    border-color: var(--color-green-500);
+  }
+
+  .contact-icon {
+    font-size: 2.5rem;
+    margin-bottom: var(--space-4);
+  }
+
+  .contact-card h2 {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--space-2);
+  }
+
+  .contact-card p {
+    font-size: var(--font-size-sm);
+    color: var(--color-white-70);
+    margin-bottom: var(--space-4);
+  }
+
+  .contact-email {
+    display: inline-block;
+    color: var(--color-green-500);
+    font-weight: 600;
+    margin-bottom: var(--space-2);
+  }
+
+  .contact-email:hover {
+    color: var(--color-green-400);
+  }
+
+  .response-time {
+    font-size: var(--font-size-xs) !important;
+    color: var(--color-white-50) !important;
+  }
+
+  .faq-section {
+    max-width: 720px;
+    margin-inline: auto;
+  }
+
+  .faq-section h2 {
+    font-size: var(--font-size-2xl);
+    text-align: center;
+    margin-bottom: var(--space-8);
+  }
+
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .faq-item {
+    background-color: var(--color-gray-800);
+    border: 1px solid var(--color-white-10);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .faq-question {
+    padding: var(--space-4) var(--space-6);
+    font-weight: 600;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .faq-question::after {
+    content: '+';
+    font-size: var(--font-size-xl);
+    color: var(--color-green-500);
+    transition: transform var(--transition-fast);
+  }
+
+  .faq-item[open] .faq-question::after {
+    transform: rotate(45deg);
+  }
+
+  .faq-question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-answer {
+    padding: 0 var(--space-6) var(--space-4);
+  }
+
+  .faq-answer p {
+    margin-bottom: var(--space-3);
+    color: var(--color-white-70);
+    line-height: 1.6;
+  }
+
+  .faq-answer ol {
+    padding-left: var(--space-6);
+    margin-bottom: var(--space-3);
+  }
+
+  .faq-answer li {
+    color: var(--color-white-70);
+    margin-bottom: var(--space-2);
+  }
+
+  .faq-answer a {
+    color: var(--color-green-500);
+  }
+
+  @media (max-width: 768px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,174 @@
+---
+import { testimonials } from '@/data/testimonials';
+import TestimonialCard from '@/components/ui/TestimonialCard.astro';
+
+const featuredTestimonials = testimonials.filter(t => t.featured);
+---
+
+<section class="section testimonials">
+  <div class="container">
+    <header class="section-header scroll-animate">
+      <span class="section-eyebrow">Real Reviews</span>
+      <h2 class="section-title">
+        Loved by Budget Planners<br />
+        <span class="title-muted">Worldwide</span>
+      </h2>
+      <p class="section-subtitle">
+        Real reviews from real users who finally found the spending tracker they've been waiting for.
+      </p>
+    </header>
+  </div>
+
+  <div class="testimonials-carousel">
+    <div class="carousel-track">
+      {featuredTestimonials.map((testimonial) => (
+        <TestimonialCard {...testimonial} />
+      ))}
+      <!-- Duplicate for infinite scroll effect -->
+      {featuredTestimonials.map((testimonial) => (
+        <TestimonialCard {...testimonial} class="testimonial-duplicate" />
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonials {
+    background-color: var(--color-black);
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Subtle ambient glow */
+  .testimonials::before {
+    content: '';
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.02), transparent 60%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: var(--space-12);
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-eyebrow {
+    display: inline-block;
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--color-white-50);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: var(--space-4);
+  }
+
+  .section-title {
+    margin-bottom: var(--space-4);
+    line-height: 1.1;
+  }
+
+  .title-muted {
+    color: var(--color-white-50);
+  }
+
+  .section-subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--color-white-50);
+    max-width: 520px;
+    margin-inline: auto;
+    line-height: 1.7;
+  }
+
+  .testimonials-carousel {
+    position: relative;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-snap-type: x mandatory;
+    padding-block: var(--space-4);
+  }
+
+  .testimonials-carousel::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Fade edges */
+  .testimonials-carousel::before,
+  .testimonials-carousel::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 80px;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .testimonials-carousel::before {
+    left: 0;
+    background: linear-gradient(to right, var(--color-black), transparent);
+  }
+
+  .testimonials-carousel::after {
+    right: 0;
+    background: linear-gradient(to left, var(--color-black), transparent);
+  }
+
+  .carousel-track {
+    display: flex;
+    gap: var(--space-6);
+    padding-inline: var(--container-padding);
+    width: max-content;
+  }
+
+  .carousel-track > :global(.testimonial-card) {
+    scroll-snap-align: center;
+  }
+
+  /* Hide duplicates on mobile where auto-scroll doesn't work as well */
+  @media (max-width: 768px) {
+    .carousel-track > :global(.testimonial-duplicate) {
+      display: none;
+    }
+
+    .testimonials-carousel::before,
+    .testimonials-carousel::after {
+      width: 40px;
+    }
+  }
+
+  /* Auto-scroll animation for desktop */
+  @media (min-width: 769px) and (prefers-reduced-motion: no-preference) {
+    .carousel-track {
+      animation: scroll-testimonials 35s linear infinite;
+    }
+
+    .testimonials-carousel:hover .carousel-track {
+      animation-play-state: paused;
+    }
+  }
+
+  @keyframes scroll-testimonials {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .carousel-track {
+      animation: none;
+    }
+  }
+</style>
