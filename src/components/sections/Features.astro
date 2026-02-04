@@ -1,6 +1,12 @@
 ---
 import { features } from '@/data/features';
 import Icon from '@/components/ui/Icon.astro';
+
+// Helper to prefix local paths with BASE_URL
+const getImageSrc = (path: string | undefined) => {
+  if (!path) return '';
+  return path.startsWith('/') ? `${import.meta.env.BASE_URL}${path.slice(1)}` : path;
+};
 ---
 
 <section id="features" class="section features">
@@ -24,7 +30,7 @@ import Icon from '@/components/ui/Icon.astro';
           <!-- Mockup Side - Bottom cropped -->
           <div class="feature-visual">
             <img
-              src={feature.image}
+              src={getImageSrc(feature.image)}
               alt={`${feature.title} - ${feature.tagline}`}
               loading="lazy"
               class="feature-image"

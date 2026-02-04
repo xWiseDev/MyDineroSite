@@ -3,13 +3,20 @@ import { footerLinks } from '@/data/navigation';
 import Logo from '@/components/ui/Logo.astro';
 
 const currentYear = new Date().getFullYear();
+
+// Helper to prefix internal paths with BASE_URL
+const getHref = (href: string) => {
+  if (href.startsWith('/')) return `${import.meta.env.BASE_URL}${href.slice(1)}`;
+  if (href.startsWith('#')) return href;
+  return href;
+};
 ---
 
 <footer class="footer">
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <a href="/" class="footer-logo">
+        <a href={import.meta.env.BASE_URL} class="footer-logo">
           <Logo />
         </a>
         <p class="footer-tagline">Simple expense tracking. No bank sync.</p>
@@ -21,7 +28,7 @@ const currentYear = new Date().getFullYear();
         <ul class="footer-list">
           {footerLinks.product.map(link => (
             <li>
-              <a href={link.href} class="footer-link">{link.label}</a>
+              <a href={getHref(link.href)} class="footer-link">{link.label}</a>
             </li>
           ))}
         </ul>
@@ -32,7 +39,7 @@ const currentYear = new Date().getFullYear();
         <ul class="footer-list">
           {footerLinks.support.map(link => (
             <li>
-              <a href={link.href} class="footer-link">{link.label}</a>
+              <a href={getHref(link.href)} class="footer-link">{link.label}</a>
             </li>
           ))}
         </ul>
@@ -43,7 +50,7 @@ const currentYear = new Date().getFullYear();
         <ul class="footer-list">
           {footerLinks.legal.map(link => (
             <li>
-              <a href={link.href} class="footer-link">{link.label}</a>
+              <a href={getHref(link.href)} class="footer-link">{link.label}</a>
             </li>
           ))}
         </ul>

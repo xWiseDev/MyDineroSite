@@ -19,11 +19,14 @@ const {
 
 const Tag = href ? 'a' : 'button';
 const isExternal = href?.startsWith('http');
+
+// Prefix internal paths with BASE_URL
+const resolvedHref = href?.startsWith('/') ? `${import.meta.env.BASE_URL}${href.slice(1)}` : href;
 ---
 
 <Tag
   class:list={['btn', `btn-${variant}`, `btn-${size}`, { 'btn-full': fullWidth }, className]}
-  href={href}
+  href={resolvedHref}
   type={!href ? type : undefined}
   target={isExternal ? '_blank' : undefined}
   rel={isExternal ? 'noopener noreferrer' : undefined}

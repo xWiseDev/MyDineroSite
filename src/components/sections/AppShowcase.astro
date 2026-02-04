@@ -1,24 +1,29 @@
 ---
 import PhoneMockup from '@/components/ui/PhoneMockup.astro';
 
+// Helper to prefix local paths with BASE_URL
+const getImageSrc = (path: string) => {
+  return path.startsWith('/') ? `${import.meta.env.BASE_URL}${path.slice(1)}` : path;
+};
+
 const screens = [
   {
-    image: '/images/feature-daily-totals.png',
+    image: getImageSrc('/images/hero-mockup.png'),
     alt: 'Spending tracker showing daily expense totals',
     label: 'Daily Totals'
   },
   {
-    image: '/images/feature-recurring.png',
+    image: getImageSrc('/images/feature-recurring.png'),
     alt: 'Recurring transactions management in budget planner',
     label: 'Recurring'
   },
   {
-    image: '/images/feature-budgets.png',
+    image: getImageSrc('/images/feature-budgets.png'),
     alt: 'Budget tracking with progress indicators',
     label: 'Budgets'
   },
   {
-    image: '/images/feature-categories.png',
+    image: getImageSrc('/images/feature-categories.png'),
     alt: 'Expense categories and subcategories',
     label: 'Categories'
   }
