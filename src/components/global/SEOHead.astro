@@ -73,10 +73,10 @@ const imageURL = image.startsWith('http') ? image : `${defaultSEO.url}${image}`;
 <meta name="apple-itunes-app" content={`app-id=${appStoreInfo.appId}`} />
 
 <!-- Favicon -->
-<link rel="icon" type="image/png" href="/images/expense-tracker-original.png" />
-<link rel="icon" type="image/png" sizes="32x32" href="/images/expense-tracker-original.png" />
-<link rel="icon" type="image/png" sizes="16x16" href="/images/expense-tracker-original.png" />
-<link rel="apple-touch-icon" sizes="180x180" href="/images/expense-tracker-original.png" />
+<link rel="icon" type="image/png" href={`${import.meta.env.BASE_URL}images/expense-tracker-original.png`} />
+<link rel="icon" type="image/png" sizes="32x32" href={`${import.meta.env.BASE_URL}images/expense-tracker-original.png`} />
+<link rel="icon" type="image/png" sizes="16x16" href={`${import.meta.env.BASE_URL}images/expense-tracker-original.png`} />
+<link rel="apple-touch-icon" sizes="180x180" href={`${import.meta.env.BASE_URL}images/expense-tracker-original.png`} />
 
 <!-- Theme Color -->
 <meta name="theme-color" content="#000000" />

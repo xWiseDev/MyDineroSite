@@ -7,6 +7,9 @@ interface Props extends Feature {
 }
 
 const { icon, title, tagline, description, image, stagger = 0 } = Astro.props;
+
+// Prefix local paths with BASE_URL
+const imageSrc = image?.startsWith('/') ? `${import.meta.env.BASE_URL}${image.slice(1)}` : image;
 ---
 
 <article
@@ -18,10 +21,10 @@ const { icon, title, tagline, description, image, stagger = 0 } = Astro.props;
   <h3 class="feature-title">{title}</h3>
   <p class="feature-tagline">{tagline}</p>
   <p class="feature-description">{description}</p>
-  {image && (
+  {imageSrc && (
     <div class="feature-image-wrap">
       <img
-        src={image}
+        src={imageSrc}
         alt={`${title} feature screenshot`}
         loading="lazy"
         class="feature-image"

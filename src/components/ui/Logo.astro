@@ -17,7 +17,7 @@ const currentSize = sizes[size];
 
 <div class="logo" style={`--icon-size: ${currentSize.icon}px; --text-size: ${currentSize.text};`}>
   <img
-    src="/images/expense-tracker-original.png"
+    src={`${import.meta.env.BASE_URL}images/expense-tracker-original.png`}
     alt="MyDinero"
     class="logo-icon"
     width={currentSize.icon}
