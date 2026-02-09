@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 MyDineroSite is a landing page for MyDinero, a privacy-first iOS expense tracking app. Built with Astro 5.x, it ships zero JavaScript by default for optimal performance.
 
-**Site URL**: https://mydinero.app
+**Site URL**: https://xwisedev.github.io/MyDineroSite/
 **Support Email**: aboyahyadev@icloud.com
 **App Launch**: February 2026 (v1)
 
@@ -34,6 +34,7 @@ Note: The dev server may use ports 4322/4323 if 4321 is busy. The site is served
 - `src/pages/contact.astro` - Contact page with single email CTA
 - `src/pages/privacy.astro` - Privacy policy (8 sections, SEO-optimized)
 - `src/pages/terms.astro` - Terms of service
+- `src/pages/404.astro` - Custom 404 error page
 
 ### Data-Driven Content
 Content is defined in TypeScript files under `src/data/`:
@@ -41,6 +42,7 @@ Content is defined in TypeScript files under `src/data/`:
 - `features.ts` - Feature cards data
 - `testimonials.ts` - Testimonial carousel content
 - `roadmap.ts` - Timeline phases and milestones
+- `values.ts` - Core values/principles content
 
 Modify these files to update site content rather than editing components directly.
 
@@ -49,11 +51,13 @@ Release notes use Astro content collections in `src/content/releases/`. Schema i
 
 ### Path Aliases
 ```typescript
+@/*           → src/*            // Preferred shorthand (used in BaseLayout and most files)
 @components/* → src/components/*
 @layouts/*    → src/layouts/*
 @data/*       → src/data/*
 @utils/*      → src/utils/*
 @styles/*     → src/styles/*
+@assets/*     → src/assets/*
 ```
 
 ### Key Files
@@ -106,7 +110,7 @@ Integrate these keywords naturally throughout content:
 
 ## Styling
 
-Global CSS variables and styles are in `src/styles/global.css`. Key patterns:
+Global CSS variables and styles are in `src/styles/global.css`, with animation keyframes in `src/styles/animations.css` (both imported by BaseLayout). Key patterns:
 
 - **Scroll animations**: Intersection Observer (configured in BaseLayout)
 - **Header**: Liquid glass effect with backdrop-filter when scrolled

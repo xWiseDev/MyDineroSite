@@ -26,5 +26,5 @@ export const footerLinks = {
 };
 
 export const socialLinks = [
-  { label: 'App Store', href: 'https://apps.apple.com/app/mydinero', icon: 'appstore' }
+  { label: 'App Store', href: 'https://apps.apple.com/app/mydinero/id6758524652', icon: 'appstore' }
 ];

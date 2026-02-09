@@ -31,9 +31,9 @@ export function getCanonicalURL(path: string = ''): string {
 }
 
 export const appStoreInfo = {
-  appId: 'id123456789', // Replace with actual App Store ID
+  appId: '6758524652',
   appName: 'MyDinero',
-  appUrl: 'https://apps.apple.com/app/mydinero/id123456789' // Replace with actual URL
+  appUrl: 'https://apps.apple.com/app/mydinero/id6758524652'
 };
 
 export const structuredData = {
