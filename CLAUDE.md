@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 MyDineroSite is a landing page for MyDinero, a privacy-first iOS expense tracking app. Built with Astro 5.x, it ships zero JavaScript by default for optimal performance.
 
-**Site URL**: https://xwisedev.github.io/MyDineroSite/
+**Site URL**: https://mydinero.app
 **Support Email**: aboyahyadev@icloud.com
 **App Launch**: February 2026 (v1)
 
@@ -19,7 +19,7 @@ npm run preview  # Preview production build locally
 npm run check    # Run Astro type checking
 ```
 
-Note: The dev server may use ports 4322/4323 if 4321 is busy. The site is served at `/MyDineroSite/` path for GitHub Pages.
+Note: The dev server may use ports 4322/4323 if 4321 is busy.
 
 ## Architecture
 
@@ -137,4 +137,4 @@ Two GitHub Actions workflows are configured:
 - `.github/workflows/deploy.yml` - GitHub Pages (primary)
 - `.github/workflows/deploy-netlify.yml` - Netlify (alternative)
 
-Base path is set to `/MyDineroSite/` for GitHub Pages subdirectory deployment.
+Custom domain `mydinero.app` is configured via `public/CNAME`. The site is served from the root path (`/`).

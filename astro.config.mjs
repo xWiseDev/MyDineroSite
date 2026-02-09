@@ -5,8 +5,7 @@ import mdx from '@astrojs/mdx';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://xwisedev.github.io',
-  base: '/MyDineroSite/',
+  site: 'https://mydinero.app',
   integrations: [
     sitemap(),
     mdx()
