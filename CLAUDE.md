@@ -8,133 +8,90 @@ MyDineroSite is a landing page for MyDinero, a privacy-first iOS expense trackin
 
 **Site URL**: https://mydinero.app
 **Support Email**: aboyahyadev@icloud.com
-**App Launch**: February 2026 (v1)
+**App Store ID**: 6758524652
 
 ## Development Commands
 
 ```bash
-npm run dev      # Start dev server at localhost:4321
+npm run dev      # Start dev server at localhost:4321 (may use 4322/4323 if busy)
 npm run build    # Build production site to ./dist/
 npm run preview  # Preview production build locally
 npm run check    # Run Astro type checking
 ```
 
-Note: The dev server may use ports 4322/4323 if 4321 is busy.
+No test runner or linter is configured.
 
 ## Architecture
 
-### Component Organization
-- `src/components/global/` - Site-wide components (Header, Footer, SEOHead)
-- `src/components/sections/` - Page sections (Hero, Features, Testimonials, Values, CTA)
-- `src/components/ui/` - Atomic reusable components (Button, Card, Badge, Icon, Logo, etc.)
+### Data-Driven Content Pattern
 
-### Pages
-- `src/pages/index.astro` - Main landing page
-- `src/pages/roadmap.astro` - Timeline-style roadmap
-- `src/pages/contact.astro` - Contact page with single email CTA
-- `src/pages/privacy.astro` - Privacy policy (8 sections, SEO-optimized)
-- `src/pages/terms.astro` - Terms of service
-- `src/pages/404.astro` - Custom 404 error page
+This is the most important pattern in the codebase: **site content lives in `src/data/*.ts` files, not in components**. To update text, features, testimonials, etc., modify the data files:
 
-### Data-Driven Content
-Content is defined in TypeScript files under `src/data/`:
-- `navigation.ts` - Nav links, footer links, social links
-- `features.ts` - Feature cards data
-- `testimonials.ts` - Testimonial carousel content
-- `roadmap.ts` - Timeline phases and milestones
-- `values.ts` - Core values/principles content
+- `navigation.ts` — nav links, footer links, social links
+- `features.ts` — feature cards
+- `testimonials.ts` — testimonial carousel
+- `roadmap.ts` — timeline phases and milestones
+- `values.ts` — core values/principles
+- `pricing.ts` — subscription plan details (display only — actual pricing/purchases are handled in the iOS app)
 
-Modify these files to update site content rather than editing components directly.
+Section components in `src/components/sections/` consume these data files and render them. Don't hardcode content in components. **Do not add purchase flows or pricing logic to the website** — the iOS app handles all transactions via the App Store.
 
 ### Content Collections
-Release notes use Astro content collections in `src/content/releases/`. Schema is defined in `src/content/config.ts` using Zod validation.
+
+Release notes use Astro content collections in `src/content/releases/` (Markdown files with Zod-validated frontmatter). Schema in `src/content/config.ts` requires: `version`, `title`, `date`, `highlights[]`, and `changes[]` (each with `type: 'feature'|'improvement'|'fix'` and `description`).
+
+Dynamic routes at `src/pages/releases/[slug].astro` generate individual release pages.
+
+### Component Organization
+
+- `src/components/global/` — Header, Footer, SEOHead (site-wide)
+- `src/components/sections/` — Hero, Features, Testimonials, Values, Pricing, AppShowcase, FinalCTA
+- `src/components/ui/` — Atomic components (Button, Card, Icon, Logo, PhoneMockup, AppStoreBadge, PricingCard, etc.)
+
+### Layout & SEO Pipeline
+
+All pages use `src/layouts/BaseLayout.astro`, which:
+1. Wraps content with SEOHead, Header, Footer
+2. Imports global CSS (`src/styles/global.css`) and animations (`src/styles/animations.css`)
+3. Injects Intersection Observer script for `.scroll-animate` elements
+4. Adds header scroll effect (`.nav-scrolled` class at 50px)
+
+SEO defaults and structured data (schema.org SoftwareApplication) are in `src/utils/seo.ts`. The `SEOHead` component handles meta tags, OG tags, and JSON-LD.
 
 ### Path Aliases
-```typescript
-@/*           → src/*            // Preferred shorthand (used in BaseLayout and most files)
-@components/* → src/components/*
-@layouts/*    → src/layouts/*
-@data/*       → src/data/*
-@utils/*      → src/utils/*
-@styles/*     → src/styles/*
-@assets/*     → src/assets/*
-```
 
-### Key Files
-- `src/layouts/BaseLayout.astro` - Main page wrapper with SEO, scroll animations
-- `src/components/global/SEOHead.astro` - SEO metadata, OG tags, structured data
-- `src/components/ui/Icon.astro` - SVG icon component (16+ icons available)
-- `src/components/ui/Logo.astro` - App logo with configurable sizes (sm/md/lg)
-- `src/utils/seo.ts` - SEO utilities with schema.org structured data
-- `astro.config.mjs` - Site configuration, integrations (sitemap, MDX, Sharp)
+Use `@/*` → `src/*` (preferred). More specific aliases (`@components/*`, `@layouts/*`, `@data/*`, `@utils/*`, `@styles/*`, `@assets/*`) also exist but `@/` is used consistently.
 
 ## Design System
 
-### Visual Style
-- **Theme**: Dark mode with liquid glass effects
-- **Background**: Floating orbs with blur, subtle grid overlays
-- **Cards**: Glass-morphism with gradient borders, subtle hover states
-- **Typography**: Clean, high contrast, -0.03em letter-spacing on headings
-
-### Glass Effect Pattern
-```css
-background: linear-gradient(
-  145deg,
-  rgba(255, 255, 255, 0.08) 0%,
-  rgba(255, 255, 255, 0.02) 50%,
-  rgba(255, 255, 255, 0.05) 100%
-);
-border: 1px solid rgba(255, 255, 255, 0.1);
-```
+- **Theme**: Dark mode only, liquid glass effects throughout
+- **Colors**: Green accent (`--color-green-500: #34C759`), dark backgrounds (`--color-gray-900: #1a1a1a`), white text with opacity variants (`--color-white-70`, `-50`, `-10`, etc.)
+- **Glass pattern**: `linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02), rgba(255,255,255,0.05))` + `border: 1px solid rgba(255,255,255,0.1)`
+- **Typography**: System font stack (`-apple-system, SF Pro`), `-0.03em` letter-spacing on headings
+- **Spacing/radius/transitions**: All via CSS custom properties in `global.css` (e.g., `--space-4`, `--radius-lg`, `--transition-fast`)
 
 ### Image Handling
-- Source images are high-res (1419×2796px for screenshots)
-- Use `image-rendering: auto` (NOT `crisp-edges` which causes pixelation)
-- Add GPU acceleration: `transform: translateZ(0); backface-visibility: hidden;`
 
-### Logo Sizes
-```typescript
-sm: { icon: 35px }  // Small contexts
-md: { icon: 46px }  // Header/toolbar
-lg: { icon: 70px }  // Large displays
-```
+- Source images are high-res (1419×2796px for screenshots)
+- Use `image-rendering: auto` (NOT `crisp-edges` — causes pixelation)
+- GPU acceleration: `transform: translateZ(0); backface-visibility: hidden;`
+
+### Icon Component
+
+`src/components/ui/Icon.astro` contains inline SVG paths for 20+ icons (recurring, categories, budgets, rocket, lock, etc.). Pass `name` prop to select icon. Add new icons by adding entries to the `icons` Record in that file.
 
 ## SEO Keywords
 
-Integrate these keywords naturally throughout content:
-- expense tracker, expense manager
-- budget planner, budget tracker, budget app
-- money manager, money tracker
-- spending tracker, track spending
-- bill tracker
-
-## Styling
-
-Global CSS variables and styles are in `src/styles/global.css`, with animation keyframes in `src/styles/animations.css` (both imported by BaseLayout). Key patterns:
-
-- **Scroll animations**: Intersection Observer (configured in BaseLayout)
-- **Header**: Liquid glass effect with backdrop-filter when scrolled
-- **Footer**: Solid dark with gradient top border and soft inner glow
-- **Hover states**: Subtle border brightening and lift effects
-
-### Accessibility
-- `prefers-reduced-motion` support on all animations
-- Skip links and proper focus states
-- ARIA labels on interactive elements
+Integrate naturally: expense tracker, expense manager, budget planner, budget tracker, budget app, money manager, spending tracker, bill tracker.
 
 ## Contact Integration
 
-Email links use this format:
 ```typescript
-const supportEmail = 'aboyahyadev@icloud.com';
-const emailSubject = encodeURIComponent('[MyDinero] Subject Here');
-const mailtoLink = `mailto:${supportEmail}?subject=${emailSubject}`;
+const mailtoLink = `mailto:aboyahyadev@icloud.com?subject=${encodeURIComponent('[MyDinero] Subject Here')}`;
 ```
 
 ## Deployment
 
-Two GitHub Actions workflows are configured:
-- `.github/workflows/deploy.yml` - GitHub Pages (primary)
-- `.github/workflows/deploy-netlify.yml` - Netlify (alternative)
-
-Custom domain `mydinero.app` is configured via `public/CNAME`. The site is served from the root path (`/`).
+- **Primary**: GitHub Pages via `.github/workflows/deploy.yml`
+- **Alternative**: Netlify via `.github/workflows/deploy-netlify.yml`
+- Custom domain `mydinero.app` configured in `public/CNAME`, served from root path (`/`)
