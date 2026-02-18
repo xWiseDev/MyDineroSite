@@ -13,7 +13,8 @@ export const mainNavLinks: NavLink[] = [
 export const footerLinks = {
   product: [
     { label: 'Features', href: '/#features' },
-    { label: 'Roadmap', href: '/roadmap' }
+    { label: 'Roadmap', href: '/roadmap' },
+    { label: 'Release Notes', href: '/releases' }
   ],
   support: [
     { label: 'Contact', href: '/contact' },
