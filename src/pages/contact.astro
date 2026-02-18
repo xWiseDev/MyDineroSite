@@ -201,6 +201,78 @@ const mailtoLink = `mailto:${supportEmail}?subject=${emailSubject}&body=${emailB
         </div>
       </section>
 
+      <!-- FAQPage Structured Data -->
+      <script type="application/ld+json" set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What makes MyDinero different from other budget apps?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "MyDinero is a manual expense tracker designed for people who want full control over their financial data. Unlike other money manager apps that require bank connections, MyDinero lets you track spending privately — your data stays on your device and syncs only to your personal iCloud. Research shows that manually entering expenses increases financial awareness and helps build better money habits."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I track my monthly bills and subscriptions?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "MyDinero includes a powerful bill tracker feature called Recurring Transactions. Set up your Netflix, rent, gym membership, or any regular expense once — the expense manager automatically adds them to your budget each month. You can skip or modify individual instances without affecting the recurring rule."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I set spending limits for different categories?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes! The budget planner lets you set monthly spending limits for any category. The budget tracker shows visual progress bars so you always know where you stand. You'll get alerts at 80% and 100% of your budget — no surprises at month end."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why doesn't the app connect to my bank account?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "By design. MyDinero is built for people who prefer privacy and mindful spending. Manual entry increases financial awareness — you become more conscious of every purchase. Plus, no bank connection means no risk of credentials being compromised. Your financial data stays completely private, syncing only to your personal iCloud account."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is my data backed up and synced across devices?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes! If you have iCloud enabled, MyDinero automatically syncs your data across all your Apple devices. Your transactions, budgets, and categories are always backed up. You can also export your data as CSV anytime from the app."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I cancel my subscription?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Subscriptions are managed through Apple: Open Settings, tap your name, tap Subscriptions, find MyDinero, and tap Cancel Subscription. You'll continue to have access to all features until the end of your current billing period."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I get a refund for my purchase?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Refunds are handled by Apple directly. You can request a refund through Apple's Report a Problem page at reportaproblem.apple.com."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is there an Android version of this money tracker?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Not currently. MyDinero is built exclusively for iOS to provide the best possible experience on iPhone and iPad. We've optimized every detail for Apple's ecosystem. We may consider an Android version in the future based on demand."
+            }
+          }
+        ]
+      })} />
+
       <!-- Bottom CTA -->
       <section class="bottom-cta scroll-animate">
         <p class="cta-text">Still have questions?</p>

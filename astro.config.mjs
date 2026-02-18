@@ -6,8 +6,11 @@ import mdx from '@astrojs/mdx';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://mydinero.app',
+  trailingSlash: 'never',
   integrations: [
-    sitemap(),
+    sitemap({
+      filter: (page) => !page.includes('/404') && !page.includes('/terms')
+    }),
     mdx()
   ],
   image: {

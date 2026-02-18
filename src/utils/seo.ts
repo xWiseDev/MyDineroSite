@@ -42,37 +42,15 @@ export const structuredData = {
     '@type': 'SoftwareApplication',
     name: 'MyDinero',
     description: defaultSEO.description,
+    url: defaultSEO.url,
+    downloadUrl: appStoreInfo.appUrl,
     operatingSystem: 'iOS 18+',
     applicationCategory: 'FinanceApplication',
     offers: {
-      '@type': 'AggregateOffer',
-      lowPrice: '3.99',
-      highPrice: '24.99',
+      '@type': 'Offer',
+      price: 0,
       priceCurrency: 'USD',
-      offerCount: 2,
-      offers: [
-        {
-          '@type': 'Offer',
-          name: 'Monthly',
-          price: '3.99',
-          priceCurrency: 'USD',
-          priceValidUntil: '2026-12-31'
-        },
-        {
-          '@type': 'Offer',
-          name: 'Yearly',
-          price: '24.99',
-          priceCurrency: 'USD',
-          priceValidUntil: '2026-12-31'
-        }
-      ]
-    },
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '4.9',
-      ratingCount: '1000',
-      bestRating: '5',
-      worstRating: '1'
+      description: 'Free download with in-app subscription'
     },
     featureList: [
       'Manual expense tracking',
